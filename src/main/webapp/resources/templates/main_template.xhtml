@@ -7,7 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <ui:insert name="title">
             <title>AeHS - Main Template</title>
@@ -24,23 +25,25 @@ and open the template in the editor.
                 <i class="fas fa-bars"></i>
             </button>
             <!-- Navbar Search-->
-            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+            <h:form styleClass="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
                     <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
-            </form>
+            </h:form>
             <!-- Navbar-->
             <ul class="navbar-nav ml-auto ml-md-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Change Password</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../../index.xhtml">Logout</a>
+                        <h:form>
+                            <h:commandLink class="dropdown-item" action="#">Settings</h:commandLink>
+                            <h:commandLink class="dropdown-item" action="#">Change Password</h:commandLink>
+                            <div class="dropdown-divider"></div>
+                            <h:commandLink class="dropdown-item" action="#{userAuthentication.logOutUser}">Logout</h:commandLink>
+                        </h:form>
                     </div>
                 </li>
             </ul>
@@ -52,115 +55,156 @@ and open the template in the editor.
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link active" href="#"
-                               ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard</a
-                            >
-                            <!--<div class="sb-sidenav-menu-heading">Primary</div>-->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="false" aria-controls="collapseRegistration">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Registration
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseRegistration" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <ui:insert name="sysad_feature">
-                                        <a class="nav-link" href="#">System User</a>
-                                    </ui:insert>
-                                    <a class="nav-link" href="#">Farmer</a>
-                                    <a class="nav-link" href="#">Farm Details</a>
-                                </nav>
-                            </div>
+                            <h:form>
+                                <h:commandLink class="nav-link active" action="#{adminPages.viewDashboard}"><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                    Dashboard
+                                </h:commandLink>
+                                <!--<div class="sb-sidenav-menu-heading">Primary</div>-->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="false" aria-controls="collapseRegistration">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    Registration
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseRegistration" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <ui:insert name="sysad_feature">
+                                            <h:commandLink class="nav-link" action="#{adminPages.registerSystemUser}" rendered="true">System User</h:commandLink>
+                                        </ui:insert>
+                                        <h:commandLink class="nav-link" action="#{adminPages.registerFarmer}">Farmer</h:commandLink>
+                                        <h:commandLink class="nav-link" action="#{adminPages.registerFarmDetails}">Farm Details</h:commandLink>
+                                    </nav>
+                                </div>
 
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDiagnosis" aria-expanded="false" aria-controls="collapseDiagnosis">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Diagnosis
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div >
-                            </a>
-                            <div class="collapse" id="collapseDiagnosis" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Predict</a>
-                                    <a class="nav-link" href="#">Manage Predictions</a>
-                                </nav>
-                            </div>
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDiagnosis" aria-expanded="false" aria-controls="collapseDiagnosis">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    Diagnosis
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div >
+                                </a>
+                                <div class="collapse" id="collapseDiagnosis" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <h:commandLink class="nav-link" action="#{adminPages.MLPredict}">Predict</h:commandLink>
+                                        <h:commandLink class="nav-link" action="#{adminPages.managePredictions}">Manage Predictions</h:commandLink>
+                                    </nav>
+                                </div>
 
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                General Search
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div >
-                            </a>
-                            <div class="collapse" id="collapseSearch" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Analytics Data</a>
-                                    <a class="nav-link" href="#">Farmer Information</a>
-                                </nav>
-                            </div>
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSearch" aria-expanded="false" aria-controls="collapseSearch">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    General Search
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div >
+                                </a>
+                                <div class="collapse" id="collapseSearch" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <h:commandLink class="nav-link" action="#{adminPages.analyticsSearch}">Analytics Data</h:commandLink>
+                                        <h:commandLink class="nav-link" action="#{adminPages.farmerSearch}">Farmer Information</h:commandLink>
+                                    </nav>
+                                </div>
+                            </h:form>
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
                         *Username Here*
+                        #{userAccessController.loginUser.userScreenName}
                     </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid">
-                        <ui:insert name="content-title">
-                            <h1 class="mt-4">Dashboard</h1>
-                        </ui:insert>
-                        <ol class="breadcrumb mb-4">
-                            <ui:insert name="content-breadcrumb">
-                                <li class="breadcrumb-item active">Dashboard</li>
-                            </ui:insert>
-                        </ol>
 
-                        <!--Row Data of Main content goes here-->
-                        <!--We shall leave the cards for now and remove it later-->
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Primary Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Warning Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Success Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">Danger Card</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">View Details</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
+                            <div class="col-md-12 right">
+                                <div style="padding: 0 20px 0 20px;">
+                                    <p:messages id="messages" showDetail="true" autoUpdate="true" globalOnly="true" closable="true"/>
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="row"></div>-->
 
-                        <!--common functionalities shall be defined here; ui:insert will be wrapped over content that are custom to user group-->
-                        <ui:insert name="main-content">
-                            <h2>Main content of user-group/page(s) should go here</h2>
+                        <ui:insert name="content-title">
+                            <!--Default here if not defined by component-->
+                            <h1 class="mt-4">Dashboard</h1>
                         </ui:insert>
+
+                        <h:panelGroup layout="block">
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderWelcome}">
+                                <!--First View for user group shall go here-->
+                                <ol class="breadcrumb mb-4">
+                                    <li class="breadcrumb-item active">Dashboard</li>
+                                </ol>
+                                <!--Row Data of Main content goes here-->
+                                <!--We shall leave the cards for now and remove it later-->
+                                <div class="row">
+                                    <div class="col-xl-3 col-md-6">
+                                        <div class="card bg-primary text-white mb-4">
+                                            <div class="card-body">Primary Card</div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-6">
+                                        <div class="card bg-warning text-white mb-4">
+                                            <div class="card-body">Warning Card</div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-6">
+                                        <div class="card bg-success text-white mb-4">
+                                            <div class="card-body">Success Card</div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-6">
+                                        <div class="card bg-danger text-white mb-4">
+                                            <div class="card-body">Danger Card</div>
+                                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                                <a class="small text-white stretched-link" href="#">View Details</a>
+                                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+
+                            <ui:insert name="sysad_register_user">
+                                <!--NB: May not be necessary, user may not even get the chance to click link to navigate here-->
+                                <h:panelGroup layout="block" rendered="#{adminPages.renderRegisterUser}">
+                                    <ui:include src="../../pages/register_user.xhtml" rendered="true"/>
+                                </h:panelGroup>
+                            </ui:insert>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderRegisterFarmer}">
+                                <ui:include src="../../pages/register_farmer.xhtml"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderRegisterFarmDetails}">
+                                <ui:include src="../../pages/register_farm_details.xhtml"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderMLPrediction}">
+                                <ui:include src="../../pages/ml_prediction.xhtml"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderManagePrediction}">
+                                <ui:include src="../../pages/manage_predictions.xhtml"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderAnalyticsSearch}">
+                                <ui:include src="../../pages/search_prediction.xhtml"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" rendered="#{adminPages.renderFarmerInfoSearch}">
+                                <ui:include src="../../pages/search_farmer.xhtml"/>
+                            </h:panelGroup>
+
+                        </h:panelGroup>
 
                     </div>
                 </main>

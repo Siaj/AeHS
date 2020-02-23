@@ -11,10 +11,10 @@ import java.io.Serializable;
  *
  * @author Iddrisu Sibdow SIAJ
  */
-public class LoginUser implements Serializable{
+public class LoginUser implements Serializable {
 
     private String userType;
-    private String userScreenName;
+    private String userScreenName = "Siaj Default";
     private String accessFor;
     private Object userLogin;
     private boolean isLogin = false;
@@ -29,6 +29,7 @@ public class LoginUser implements Serializable{
     }
 
     public String getUserScreenName() {
+        System.out.println(userScreenName);
         return userScreenName;
     }
 
@@ -67,6 +68,5 @@ public class LoginUser implements Serializable{
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
-    
+
 }

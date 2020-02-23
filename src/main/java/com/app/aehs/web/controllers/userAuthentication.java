@@ -39,7 +39,7 @@ public class userAuthentication implements Serializable {
         try {
             System.out.println(username);
             System.out.println(password);
-            System.out.println("Authentication reached successfully");
+            System.out.println("Authentication reached successfully"); 
             return "pages/system_admin/system_admin.xhtml?faces-redirect=true";
         } catch (Exception e) {
             e.printStackTrace();
