@@ -7,7 +7,9 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,44 +20,96 @@ and open the template in the editor.
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Register User</li>
                 </ol>
+                <h:panelGroup layout="block">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">First Name</label>
+                                <h:inputText id="sysFName" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Last Name</label>
+                                <h:inputText id="sysLName" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Gender</label>
+                                <!--<h:inputText id="inputparam3" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
+                                <h:selectOneMenu styleClass="form-control" id="sysGender">
+                                    <f:selectItems value="#{commonOptions.genderOptions}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Phone Number</label>
+                                <h:inputText autocomplete="off" id="sysPhoneNum" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputEmailAddress">User Role</label>
+                                <!--<h:inputText autocomplete="off" id="inputparam5" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
+                                <h:selectOneMenu styleClass="form-control" id="sysUserRole">
+                                    <f:selectItems value="#{commonOptions.userRoleOptions}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Email</label>
+                                <h:inputText autocomplete="off" id="sysEmail" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            </div>
+                        </div>
+                    </div>
+                    <center>
+                        <div class="form-group mt-4 mb-0">
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Register Account"/>
+                        </div>
+                    </center>
+                    <br/><br/>
+                    <hr/>
+                </h:panelGroup>
 
-                <h:panelGroup layout="block" class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <h:panelGroup layout="block" rendered="true">
+                    <div class="form-row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">User Group</label>
+                                <h:inputText styleClass="form-control" id="genUgroup" readonly="true" value="My User Group"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Username</label>
+                                <h:inputText styleClass="form-control" id="genUname" readonly="true" value="Generated Username"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Password</label>
+                                <h:inputText styleClass="form-control" id="genPass" readonly="true" value="Generated Password"/>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
+                    <center>
+                        <div class="form-group mt-4 mb-0">
+                            <!--<h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" value="Save"/>-->
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Ok...Proceed"/>
                         </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
+                    </center>
                 </h:panelGroup>
             </h:form>
         </ui:composition>

@@ -7,7 +7,9 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,43 +22,117 @@ and open the template in the editor.
                 </ol>
 
                 <h:panelGroup layout="block" class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
-                    </div>
+                    <h:panelGroup layout="block" class="col-md-12">
+                        <!--resizableColumns="true" style="margin-bottom:20px"-->
+                        <p:dataTable var="manage_prediction" paginator="true" id="manage_pred"
+                                     paginatorPosition="bottom" rows="10"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
+                                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                     rowsPerPageTemplate="5,10,15">
+                            <f:facet name="header">
+                                <h:outputText value="List of Predictions"/>
+                            </f:facet>
+                            <p:column headerText="Date" priority="2" style="width: 150px">
+                                <h:outputText value="02/25/2020" />
+                            </p:column>
+                            <p:column headerText="Input1" priority="3">
+                                <h:outputText value="August"/>
+                            </p:column>
+                            <p:column headerText="Input2" priority="4">
+                                <h:outputText value="Grater-Than Normal"/>
+                            </p:column>
+                            <p:column headerText="Input3" priority="5">
+                                <h:outputText value="Less-Than Normal"/>
+                            </p:column>
+                            <p:column headerText="Input4" priority="6">
+                                <h:outputText value="Normal"/>
+                            </p:column>
+                            <p:column headerText="Prediction" style="width: 150px">
+                                <h:outputText value="Pneumonia"/>
+                            </p:column>
+                            <p:column headerText="Farm" style="width: 200px">
+                                <h:outputText value="Akropong Farm2"/>
+                            </p:column>
+                            <p:column headerText="Options" style="width: 100px">
+                                <h:commandLink value="Select" style="text-decoration: underline;color: green"/>
+                            </p:column>
+                        </p:dataTable> 
+                    </h:panelGroup>
                 </h:panelGroup>
+                <br/><br/><hr/>
+                <h:panelGroup layout="block" rendered="true">
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Date</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Prediction</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Input Param 1</label>
+                                <h:inputText styleClass="form-control" readonly="true" value="Generated Username"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Input Param 2</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Input Param 3</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Input Param 4</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Farm Name</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Owner</label>
+                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <center>
+                        <div class="form-group mt-4 mb-0">
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" value="Delete"/>
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel"/>
+                        </div>
+                    </center>
+                </h:panelGroup>
+
             </h:form>
         </ui:composition>
     </body>

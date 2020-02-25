@@ -5,9 +5,15 @@
  */
 package com.app.aehs.web.controllers;
 
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,8 +29,14 @@ public class mLPrediction implements Serializable {
     public mLPrediction() {
     }
     
-    public void predict() {
-    // Logic to make request and get prediction 
+    public void predict() throws IOException {
+        try {
+            // Logic to make request and get prediction
+            URL url = new URL("");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(mLPrediction.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

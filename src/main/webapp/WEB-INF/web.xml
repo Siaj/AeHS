@@ -47,6 +47,7 @@
     </error-page>
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <param-value>excite-bike</param-value>
     </context-param>
+    <!--start | cupertino | excite-bike-->
 </web-app>

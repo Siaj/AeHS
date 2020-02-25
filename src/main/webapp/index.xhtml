@@ -34,7 +34,7 @@ and open the template in the editor.
                                         <h:form>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputEmailAddress">Email</label>
-                                                <h:inputText id="username" size="20" styleClass="form-control py-4" pt:placeholder="Enter email address" value="#{userAuthentication.username}" requiredMessage="Please enter username"/>
+                                                <h:inputText autocomplete="off" id="username" size="20" styleClass="form-control py-4" pt:placeholder="Enter email address" value="#{userAuthentication.username}" requiredMessage="Please enter username"/>
                                             </div>
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputPassword">Password</label>
@@ -47,14 +47,14 @@ and open the template in the editor.
                                                 </div>
                                             </div>
                                             <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="#">Forgot Password?</a>
+                                                <a class="small" href="password.html">Forgot Password?</a>
                                                 <h:commandButton styleClass="btn btn-primary" id="submit" value="Login" action="#{userAuthentication.authenticateUser}"/>
                                                 <!--<a class="btn btn-primary" href="pages/extension_officer/extension_officer.xhtml">Login</a>-->
                                             </div>
                                         </h:form>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <div class="small"><a href="#">Need an account? Sign up!</a></div>
+                                        <!--<div class="small"><a href="#">Need an account? Sign up!</a></div>-->
                                     </div>
                                 </div>
                             </div>

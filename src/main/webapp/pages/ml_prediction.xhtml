@@ -7,7 +7,9 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,45 +20,91 @@ and open the template in the editor.
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">ML Prediction</li>
                 </ol>
-
-                <h:panelGroup layout="block" class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-primary text-white mb-4">
-                            <div class="card-body">Primary Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                <h:panelGroup layout="block">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Date</label>
+                                <h:selectOneMenu styleClass="form-control" id="mlPredDate">
+                                    <f:selectItems value="#{commonOptions.predictParam1Options}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Plant Stand</label>
+                                <h:selectOneMenu styleClass="form-control" id="mlPredPlantStand">
+                                    <f:selectItems value="#{commonOptions.predictParam2Options}"/>
+                                </h:selectOneMenu>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-warning text-white mb-4">
-                            <div class="card-body">Warning Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Precipitation</label>
+                                <h:selectOneMenu styleClass="form-control" id="mlPrecip">
+                                    <f:selectItems value="#{commonOptions.predictParam3Options}"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Temperature</label>
+                                <h:selectOneMenu styleClass="form-control" id="mlTemp">
+                                    <f:selectItems value="#{commonOptions.predictParam4Options}"/>
+                                </h:selectOneMenu>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-success text-white mb-4">
-                            <div class="card-body">Success Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <label class="small mb-1" for="inputEmailAddress">Other</label>
+                        <h:inputText autocomplete="off" id="inputparam5" styleClass="form-control" pt:placeholder="Enter something pls"/>
                     </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="card bg-danger text-white mb-4">
-                            <div class="card-body">Danger Card</div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <a class="small text-white stretched-link" href="#">View Details</a>
-                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                            </div>
+                    <center>
+                        <div class="form-group mt-4 mb-0">
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Get Prediction"/>
                         </div>
-                    </div>
+                    </center>
+                    <br/><br/>
+                    <hr/>
                 </h:panelGroup>
+
+                <h:panelGroup layout="block" rendered="true">
+                    <div class="form-row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputLastName">Predicted Disease</label>
+                                <h:inputText styleClass="form-control" id="mlPredictedDisease" readonly="true" value="Predicted Diseaese"/>
+                            </div>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Description</label>
+                                <h:inputTextarea styleClass="form-control" rows="3" readonly="true" value="Fisher,D.H. and Schlimmer,J.C. (1988). Concept Simplification and Predictive Accuracy. Proceedings of the Fifth International Conference on Machine Learning (pp. 22-28). Ann Arbor, Michigan: Morgan Kaufmann."/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputFirstName">Prescription</label>
+                                <h:inputTextarea styleClass="form-control" rows="3" readonly="true" value="Prescription"/>
+                            </div>
+                        </div>
+                    </div>
+                    <center>
+                        <div class="form-group mt-4 mb-0">
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" value="Save"/>
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel"/>
+                        </div>
+                    </center>
+                </h:panelGroup>
+
+
             </h:form>
         </ui:composition>
     </body>
