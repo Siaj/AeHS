@@ -31,6 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SystemUser.findAll", query = "SELECT s FROM SystemUser s")
+    , @NamedQuery(name = SystemUser.FIND_BY_USERNAME_PASSWORD, query = "SELECT s FROM SystemUser s WHERE s.username = :username AND s.password = :password")
     , @NamedQuery(name = "SystemUser.findById", query = "SELECT s FROM SystemUser s WHERE s.id = :id")
     , @NamedQuery(name = "SystemUser.findByFirstname", query = "SELECT s FROM SystemUser s WHERE s.firstname = :firstname")
     , @NamedQuery(name = "SystemUser.findByLastname", query = "SELECT s FROM SystemUser s WHERE s.lastname = :lastname")
@@ -43,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "SystemUser.findByDeleted", query = "SELECT s FROM SystemUser s WHERE s.deleted = :deleted")})
 public class SystemUser implements Serializable {
 
+    public static final String FIND_BY_USERNAME_PASSWORD = "SystemUser.FIND_BY_USERNAME_PASSWORD";
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -64,7 +66,7 @@ public class SystemUser implements Serializable {
     private String username;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 255)
     private String password;
     @Basic(optional = false)
     @NotNull
@@ -235,5 +237,5 @@ public class SystemUser implements Serializable {
     public String toString() {
         return "com.app.aehs.server.entities.SystemUser[ id=" + id + " ]";
     }
-    
+
 }

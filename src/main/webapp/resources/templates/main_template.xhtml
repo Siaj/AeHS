@@ -68,7 +68,7 @@ and open the template in the editor.
                                 <div class="collapse" id="collapseRegistration" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <ui:insert name="sysad_feature">
-                                            <h:commandLink class="nav-link" action="#{adminPages.registerSystemUser}" rendered="true">System User</h:commandLink>
+                                            <h:commandLink class="nav-link" action="#{adminPages.registerSystemUser}" rendered="#{userAccessController.isAdmin}">System User</h:commandLink>
                                         </ui:insert>
                                         <h:commandLink class="nav-link" action="#{adminPages.registerFarmer}">Farmer</h:commandLink>
                                         <h:commandLink class="nav-link" action="#{adminPages.registerFarmDetails}">Farm Details</h:commandLink>
@@ -103,8 +103,9 @@ and open the template in the editor.
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        *Username Here*
-                        #{userAccessController.loginUser.userScreenName}
+                        <ui:insert name="screenName">
+                            
+                        </ui:insert>
                     </div>
                 </nav>
             </div>

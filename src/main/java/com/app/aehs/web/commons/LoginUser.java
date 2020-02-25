@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class LoginUser implements Serializable {
 
     private String userType;
-    private String userScreenName = "Siaj Default";
+    private String userScreenName = "";
     private String accessFor;
     private Object userLogin;
     private boolean isLogin = false;
@@ -29,7 +29,7 @@ public class LoginUser implements Serializable {
     }
 
     public String getUserScreenName() {
-        System.out.println(userScreenName);
+//        System.out.println(userScreenName);
         return userScreenName;
     }
 

@@ -28,5 +28,10 @@ public class SystemUserFacade extends AbstractFacade<SystemUser> {
     public SystemUserFacade() {
         super(SystemUser.class);
     }
+
+    @Override
+    public void create(SystemUser entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

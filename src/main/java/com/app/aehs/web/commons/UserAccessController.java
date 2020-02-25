@@ -6,6 +6,7 @@
 package com.app.aehs.web.commons;
 
 import com.app.aehs.server.entities.SystemUser;
+import com.app.aehs.web.controllers.adminPages;
 import java.io.Serializable;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -26,6 +27,7 @@ public class UserAccessController implements Serializable {
     private LoginUser loginUser = null;
     private String loginUsername = "";
     private SystemUser systemUser = null;
+    private adminPages pages = null;
 
     public UserAccessController() {
     }
@@ -59,7 +61,7 @@ public class UserAccessController implements Serializable {
     }
 
     public LoginUser getLoginUser() {
-         try {
+        try {
             loginUser = (LoginUser) JSFUtility.getSessionValue(AeHSConstants.ADMIN_USER);
         } catch (Exception e) {
             loginUser = null;
@@ -72,8 +74,16 @@ public class UserAccessController implements Serializable {
     }
 
     public String getLoginUsername() {
-        LoginUser user = getLoginUser();
-        loginUsername = user.getUserScreenName();
+        try {
+            LoginUser user = getLoginUser();
+            if (user == null) {
+                loginUsername = "";
+            } else {
+                loginUsername = user.getUserScreenName();
+            }
+        } catch (Exception e) {
+            loginUsername = null;
+        }
         return loginUsername;
     }
 
@@ -88,6 +98,15 @@ public class UserAccessController implements Serializable {
             systemUser = null;
         }
         return systemUser;
+    }
+
+    public adminPages getPages() {
+        try {
+            pages = (adminPages) JSFUtility.getSessionValue(AeHSConstants.ADMIN_PAGE_MANAGER);
+        } catch (Exception e) {
+            pages = null;
+        }
+        return pages;
     }
 
     public void setSystemUser(SystemUser systemUser) {

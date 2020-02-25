@@ -13,6 +13,10 @@ public class AeHSConstants {
 
     public static String ADMIN_USER = "ADMIN_USER";
     public static String LOGIN_USER = "LOGIN_USER";
+    public static String ADMIN_PAGE_MANAGER = "PAGE_CONTROLLER";
+    
+    public static String EXTENSION_USER = "EXTENSION_USER";
+    public static String EXTENSION_USER_PAGE_MANAGER = "EXTENSION_USER_PAGE_MANAGER";
     
     public static String ADMIN_MENU = "ADMIN_MENU";
     public static String STRING = "STRING";

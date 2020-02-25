@@ -7,21 +7,30 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
+    <f:metadata>
+        <f:event listener="#{userAuthentication.isLoggedIn}" type="preRenderView"/> 
+        <f:event listener="#{userAuthentication.checkIsAdmin}" type="preRenderView"/> 
+    </f:metadata>
     <h:body>
         <ui:composition template="./../../resources/templates/main_template.xhtml">
             <ui:define name="title">
                 <title>AeHS - System Administrator</title>
             </ui:define>
-            
+
+            <ui:define name="screenName">
+                #{userAccessController.loginUsername}
+            </ui:define>
+
             <ui:define name="content-title">
                 <h1 class="mt-4">System Administrator</h1>
             </ui:define>
-            
-            
+
+
             <ui:define name="main-content">
                 <!--different pages to be included based on functionality-->
                 <h:panelGroup layout="block" styleClass="row">
