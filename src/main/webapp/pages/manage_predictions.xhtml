@@ -25,54 +25,59 @@ and open the template in the editor.
                     <h:panelGroup layout="block" class="col-md-12">
                         <!--resizableColumns="true" style="margin-bottom:20px"-->
                         <p:dataTable var="manage_prediction" paginator="true" id="manage_pred"
-                                     paginatorPosition="bottom" rows="10"
+                                     paginatorPosition="bottom" rows="5" value="#{mLPrediction.MLPredDataTable}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
                                      currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                                     rowsPerPageTemplate="5,10,15">
+                                     rowsPerPageTemplate="5,10,15" reflow="true">
                             <f:facet name="header">
                                 <h:outputText value="List of Predictions"/>
                             </f:facet>
-                            <p:column headerText="Date" priority="2" style="width: 150px">
-                                <h:outputText value="02/25/2020" />
+                            <p:column headerText="Date" priority="2">
+                                <h:outputText value="#{manage_prediction.date}">
+                                    <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" type="date" timeStyle="short"/>
+                                </h:outputText>
                             </p:column>
-                            <p:column headerText="Input1" priority="3">
-                                <h:outputText value="August"/>
+                            <p:column headerText="Precip" priority="3">
+                                <h:outputText value="#{manage_prediction.inputParam1}"/>
                             </p:column>
-                            <p:column headerText="Input2" priority="4">
-                                <h:outputText value="Grater-Than Normal"/>
+                            <p:column headerText="Temp" priority="4">
+                                <h:outputText value="#{manage_prediction.inputParam2}"/>
                             </p:column>
-                            <p:column headerText="Input3" priority="5">
-                                <h:outputText value="Less-Than Normal"/>
+                            <p:column headerText="Plant Stand" priority="5">
+                                <h:outputText value="#{manage_prediction.inputParam3}"/>
                             </p:column>
-                            <p:column headerText="Input4" priority="6">
-                                <h:outputText value="Normal"/>
+                            <p:column headerText="Date" priority="6">
+                                <h:outputText value="#{manage_prediction.inputParam4}"/>
                             </p:column>
-                            <p:column headerText="Prediction" style="width: 150px">
-                                <h:outputText value="Pneumonia"/>
+                            <p:column headerText="Prediction">
+                                <h:outputText value="#{manage_prediction.prediction.name}"/>
                             </p:column>
-                            <p:column headerText="Farm" style="width: 200px">
-                                <h:outputText value="Akropong Farm2"/>
+                            <p:column headerText="Farm">
+                                <h:outputText value="#{manage_prediction.farmDetail.name}"/>
                             </p:column>
-                            <p:column headerText="Options" style="width: 100px">
-                                <h:commandLink value="Select" style="text-decoration: underline;color: green"/>
+                            <p:column headerText="Options">
+                                <h:commandLink value="Select" style="text-decoration: underline;color: green" action="#{mLPrediction.selectMLpredictionRow}"/>
                             </p:column>
                         </p:dataTable> 
                     </h:panelGroup>
                 </h:panelGroup>
                 <br/><br/><hr/>
-                <h:panelGroup layout="block" rendered="true">
+
+                <h:panelGroup layout="block" rendered="#{mLPrediction.renderManagePrediction}">
 
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Date</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.mlPrediction.date}">
+                                    <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" type="date" timeStyle="short"/>
+                                </h:inputText>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Prediction</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.diseases.name}"/>
                             </div>
                         </div>
                     </div>
@@ -80,14 +85,14 @@ and open the template in the editor.
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Input Param 1</label>
-                                <h:inputText styleClass="form-control" readonly="true" value="Generated Username"/>
+                                <label class="small mb-1" for="inputFirstName">Precipitation</label>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.predPrecip.value}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Input Param 2</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <label class="small mb-1" for="inputFirstName">Temperature</label>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.predTemp.value}"/>
                             </div>
                         </div>
                     </div>
@@ -95,14 +100,14 @@ and open the template in the editor.
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Input Param 3</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <label class="small mb-1" for="inputFirstName">Plant Stand</label>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.predPlantStand.value}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Input Param 4</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <label class="small mb-1" for="inputFirstName">Date(Month)</label>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.predDate.value}"/>
                             </div>
                         </div>
                     </div>
@@ -113,13 +118,14 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Farm Name</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" value="#{mLPrediction.farmDetail.name}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Owner</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" 
+                                             value="#{mLPrediction.farmDetail.owner.firstname} #{generalSearch.farmDetail.owner.lastname}"/>
                             </div>
                         </div>
                     </div>
@@ -127,8 +133,10 @@ and open the template in the editor.
 
                     <center>
                         <div class="form-group mt-4 mb-0">
-                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" value="Delete"/>
-                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel"/>
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                             value="Delete" action="#{mLPrediction.deletePrediction}"
+                                             onclick="return confirm('Do you really want to delete this predicted results. This action is irreversible!')"/>
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel" action="#{mLPrediction.resetPrediction}"/>
                         </div>
                     </center>
                 </h:panelGroup>

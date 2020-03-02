@@ -9,7 +9,8 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -24,40 +25,111 @@ and open the template in the editor.
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="small mb-1" for="inputFirstName">First Name</label>
-                            <h:inputText id="farmFName" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            <label class="small mb-1">First Name</label>
+                            <h:inputText id="farmFName" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.firstname}"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="small mb-1" for="inputLastName">Last Name</label>
-                            <h:inputText id="farmLName" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            <label class="small mb-1">Last Name</label>
+                            <h:inputText id="farmLName" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.lastname}"/>
                         </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="small mb-1" for="inputFirstName">Gender</label>
+                            <label class="small mb-1">Gender</label>
                             <!--<h:inputText id="inputparam3" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
-                            <h:selectOneMenu styleClass="form-control" id="farmGender">
+                            <h:selectOneMenu styleClass="form-control" id="farmGender" value="#{systemUserController.systemUser.gender}">
                                 <f:selectItems value="#{commonOptions.genderOptions}"/>
                             </h:selectOneMenu>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label class="small mb-1" for="inputLastName">Phone Number</label>
-                            <h:inputText autocomplete="off" id="farmPhoneNum" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            <label class="small mb-1">Phone Number</label>
+                            <h:inputText id="farmPhoneNum" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.phoneNumber}"/>
                         </div>
                     </div>
                 </div>
-
                 <center>
                     <div class="form-group mt-4 mb-0">
-                        <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Register Farmer"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                         value="Register Farmer" action="#{systemUserController.saveFarmer}"
+                                         rendered="#{systemUserController.renderSave}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                         value="Update Farmer" action="#{systemUserController.updateFarmer}"
+                                         rendered="#{!systemUserController.renderSave}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%;  margin: 7px" 
+                                         value="Reset Details" action="#{systemUserController.resetButton}"
+                                         rendered="#{systemUserController.renderSave}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%;" 
+                                         value="Cancel Update" action="#{systemUserController.resetButton}"
+                                         rendered="#{!systemUserController.renderSave}"/>
                     </div>
                 </center>
+            </h:form>
+            <br/><br/>
+            <hr/>
+            <h:form>
+                <h:panelGroup layout="block" styleClass="row">
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:outputLabel value="Search By: "/>
+                        <h:selectOneMenu styleClass="form-control"
+                                         value="#{systemUserController.searchCriteria}">
+                            <f:selectItem itemValue="" itemLabel="---Select One---"/>
+                            <f:selectItem itemValue="firstname" itemLabel="Name"/>
+                            <f:selectItem itemValue="phoneNumber" itemLabel="Contact"/>
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:outputLabel value="Search Text: "/>
+                        <h:inputText id="searchFarmUserText" styleClass="form-control" pt:placeholder="Search Text" 
+                                     value="#{systemUserController.searchText}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:commandButton value="Search" action="#{systemUserController.searchFarmer}" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0"/>
+                        <h:commandButton value="Reset" action="#{systemUserController.resetSearch}" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <br/>
+
+                <h:panelGroup layout="block" class="row">
+                    <h:panelGroup layout="block" class="col-md-12">
+                        <!--resizableColumns="true" style="margin-bottom:20px"-->
+                        <p:dataTable id="search_farmer_user" var="manage_farmer" paginator="true" 
+                                     paginatorPosition="bottom" rows="5" value="#{systemUserController.farmerDataTable}"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
+                                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                     rowsPerPageTemplate="5,10,15">
+                            <f:facet name="header">
+                                <h:outputText value="List of Farmers"/>
+                            </f:facet>
+                            <p:column headerText="Firstname" style="width: 150px">
+                                <h:outputText value="#{manage_farmer.firstname}" />
+                            </p:column>
+                            <p:column headerText="Lastname" style="width: 150px">
+                                <h:outputText value="#{manage_farmer.lastname}"/>
+                            </p:column>
+                            <p:column headerText="Gender" priority="3" style="width: 100px">
+                                <h:outputText value="#{manage_farmer.gender}"/>
+                            </p:column>
+                            <p:column headerText="Status" style="width: 150px">
+                                <h:outputText value="#{manage_farmer.accountStatus}"/>
+                            </p:column>
+                            <p:column headerText="Contact" style="width: 150px" priority="2">
+                                <h:outputText value="#{manage_farmer.phoneNumber}"/>
+                            </p:column>
+                            <p:column headerText="Options" style="width: 100px">
+                                <h:commandLink value="Select" action="#{systemUserController.rowSelectDataFarmer}"
+                                               style="text-decoration: underline;color: green" />
+                            </p:column>
+                        </p:dataTable> 
+                    </h:panelGroup>
+                </h:panelGroup>
             </h:form>
         </ui:composition>
     </body>

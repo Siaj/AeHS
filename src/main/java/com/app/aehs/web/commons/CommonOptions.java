@@ -5,8 +5,10 @@
  */
 package com.app.aehs.web.commons;
 
+import com.app.aehs.server.ejb.FarmDetailFacade;
 import com.app.aehs.server.ejb.SystemUserFacade;
 import com.app.aehs.server.ejb.UserRoleFacade;
+import com.app.aehs.server.entities.FarmDetail;
 import com.app.aehs.server.entities.SystemUser;
 import com.app.aehs.server.entities.UserRole;
 import javax.inject.Named;
@@ -35,11 +37,14 @@ public class CommonOptions implements Serializable {
     private SelectItem[] predictParam3Options;
     private SelectItem[] predictParam4Options;
     private SelectItem[] predictParam5Options;
+    private SelectItem[] farmDetailsOption;
 
     @Inject
     private UserRoleFacade userRoleFacade;
     @Inject
     private SystemUserFacade systemUserFacade;
+    @Inject
+    private FarmDetailFacade farmDetailFacade;
 
     public CommonOptions() {
     }
@@ -69,11 +74,18 @@ public class CommonOptions implements Serializable {
     }
 
     public SelectItem[] getUserRoleOptions() {
-        userRoleOptions = new SelectItem[3];
+         userRoleOptions = new SelectItem[userRoleFacade.findAll().size() + 1];
         userRoleOptions[0] = new SelectItem("", "---Select One---");
-        userRoleOptions[1] = new SelectItem("1", "System Administrator");
-        userRoleOptions[2] = new SelectItem("2", "Extension Officer");
+        int c = 1;
 
+        try {
+            for (UserRole d : userRoleFacade.findAll()) {
+                userRoleOptions[c] = new SelectItem(d.getId(), d.getRoleName());
+                c++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return userRoleOptions;
     }
 
@@ -81,14 +93,37 @@ public class CommonOptions implements Serializable {
         this.userRoleOptions = userRoleOptions;
     }
 
+    public SelectItem[] getFarmDetailsOption() {
+        farmDetailsOption = new SelectItem[farmDetailFacade.findAll().size() + 1];
+//        System.out.println("My Size: " + systemUserFacade.systemUserGetAllFarmers(true));
+        farmDetailsOption[0] = new SelectItem("", "---Select Farm---");
+        int c = 1;
+
+        try {
+            for (FarmDetail u : farmDetailFacade.findAll()) {
+                farmDetailsOption[c] = new SelectItem(u.getId(), u.getName() + " - "
+                        + u.getName() + "(" + u.getId() + ")");
+                c++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return farmDetailsOption;
+    }
+
+    public void setFarmDetailsOption(SelectItem[] farmDetailsOption) {
+        this.farmDetailsOption = farmDetailsOption;
+    }
+
     public SelectItem[] getSystemUsersOptions() {
-//        Shall change query to fetch only user who have role defined as FARMER
-        systemUsersOptions = new SelectItem[systemUserFacade.findAll().size() + 1];
+//        Shall change query to fetch only user who have role defined as FARMER = DONE
+        systemUsersOptions = new SelectItem[systemUserFacade.systemUserGetAllFarmers(true).size() + 1];
+        System.out.println("My Size: " + systemUserFacade.systemUserGetAllFarmers(true));
         systemUsersOptions[0] = new SelectItem("", "---Select Owner---");
         int c = 1;
 
         try {
-            for (SystemUser u : systemUserFacade.findAll()) {
+            for (SystemUser u : systemUserFacade.systemUserGetAllFarmers(true)) {
                 systemUsersOptions[c] = new SelectItem(u.getId(), u.getFirstname() + " - "
                         + u.getUsername() + "(" + u.getId() + ")");
                 c++;

@@ -11,8 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,46 +26,45 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "farm_detail", catalog = "aehs_db", schema = "")
+@Table(catalog = "aehs_db", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "FarmDetail.findAll", query = "SELECT f FROM FarmDetail f")
-    , @NamedQuery(name = "FarmDetail.findById", query = "SELECT f FROM FarmDetail f WHERE f.id = :id")
-    , @NamedQuery(name = "FarmDetail.findByName", query = "SELECT f FROM FarmDetail f WHERE f.name = :name")
-    , @NamedQuery(name = "FarmDetail.findByMainPlantation", query = "SELECT f FROM FarmDetail f WHERE f.mainPlantation = :mainPlantation")
-    , @NamedQuery(name = "FarmDetail.findByLocation", query = "SELECT f FROM FarmDetail f WHERE f.location = :location")
-    , @NamedQuery(name = "FarmDetail.findByUpdated", query = "SELECT f FROM FarmDetail f WHERE f.updated = :updated")
-    , @NamedQuery(name = "FarmDetail.findByDeleted", query = "SELECT f FROM FarmDetail f WHERE f.deleted = :deleted")})
-public class FarmDetail implements Serializable {
+    @NamedQuery(name = "Diseases.findAll", query = "SELECT d FROM Diseases d")
+    , @NamedQuery(name = "Diseases.findById", query = "SELECT d FROM Diseases d WHERE d.id = :id")
+    , @NamedQuery(name = "Diseases.findByCode", query = "SELECT d FROM Diseases d WHERE d.code = :code")
+    , @NamedQuery(name = "Diseases.findByName", query = "SELECT d FROM Diseases d WHERE d.name = :name")
+    , @NamedQuery(name = "Diseases.findByUpdated", query = "SELECT d FROM Diseases d WHERE d.updated = :updated")
+    , @NamedQuery(name = "Diseases.findByDeleted", query = "SELECT d FROM Diseases d WHERE d.deleted = :deleted")})
+public class Diseases implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 100)
     @Column(name = "_id")
     private String id;
-    @Size(max = 255)
+    @Size(max = 10)
+    private String code;
+    @Size(max = 70)
     private String name;
-    @Size(max = 255)
-    @Column(name = "main_plantation")
-    private String mainPlantation;
-    @Size(max = 255)
-    private String location;
+    @Lob
+    @Size(max = 65535)
+    private String description;
+    @Lob
+    @Size(max = 65535)
+    private String prescription;
     @Size(max = 10)
     private String updated;
     @Size(max = 10)
     private String deleted;
-    @JoinColumn(name = "owner", referencedColumnName = "_id")
-    @ManyToOne
-    private SystemUser owner;
-    @OneToMany(mappedBy = "farmDetail")
+    @OneToMany(mappedBy = "prediction")
     private List<MlPrediction> mlPredictionList;
 
-    public FarmDetail() {
+    public Diseases() {
     }
 
-    public FarmDetail(String id) {
+    public Diseases(String id) {
         this.id = id;
     }
 
@@ -78,6 +76,14 @@ public class FarmDetail implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
@@ -86,20 +92,20 @@ public class FarmDetail implements Serializable {
         this.name = name;
     }
 
-    public String getMainPlantation() {
-        return mainPlantation;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMainPlantation(String mainPlantation) {
-        this.mainPlantation = mainPlantation;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPrescription() {
+        return prescription;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPrescription(String prescription) {
+        this.prescription = prescription;
     }
 
     public String getUpdated() {
@@ -116,14 +122,6 @@ public class FarmDetail implements Serializable {
 
     public void setDeleted(String deleted) {
         this.deleted = deleted;
-    }
-
-    public SystemUser getOwner() {
-        return owner;
-    }
-
-    public void setOwner(SystemUser owner) {
-        this.owner = owner;
     }
 
     @XmlTransient
@@ -145,10 +143,10 @@ public class FarmDetail implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof FarmDetail)) {
+        if (!(object instanceof Diseases)) {
             return false;
         }
-        FarmDetail other = (FarmDetail) object;
+        Diseases other = (Diseases) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -157,7 +155,7 @@ public class FarmDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "com.app.aehs.server.entities.FarmDetail[ id=" + id + " ]";
+        return "com.app.aehs.server.entities.Diseases[ id=" + id + " ]";
     }
     
 }

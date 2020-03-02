@@ -9,30 +9,31 @@ and open the template in the editor.
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <ui:composition>
-            <h:form prependId="false">
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">Register Farm Details</li>
-                </ol>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Register Farm Details</li>
+            </ol>
 
+            <h:form prependId="false">
                 <div class="form-row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputFirstName">Farm Name</label>
-                            <h:inputText id="farmName" styleClass="form-control" pt:placeholder="Enter something pls"/>
+                            <h:inputText styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.name}"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputFirstName">Farm Owner</label>
                             <!--<h:inputText id="inputparam3" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
-                            <h:selectOneMenu styleClass="form-control" id="farmOwner">
+                            <h:selectOneMenu styleClass="form-control" value="#{farmDetailsController.farmOwner}">
                                 <f:selectItems value="#{commonOptions.systemUsersOptions}"/>
                             </h:selectOneMenu>
                         </div>
@@ -44,23 +45,97 @@ and open the template in the editor.
                         <div class="form-group">
                             <label class="small mb-1" for="inputLastName">Main Plantation</label>
                             <!--<h:inputText id="farmLName" styleClass="form-control" pt:placeholder="Enter something pls"/>-->
-                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" id="farmPlants" />
+                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.mainPlantation}" />
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputLastName">Location</label>
-                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" id="farmLocation" />
+                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.location}"/>
                         </div>
                     </div>
                 </div>
 
                 <center>
                     <div class="form-group mt-4 mb-0">
-                        <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Register Farmer"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                         value="Register Farm" action="#{farmDetailsController.saveFarmDetails}"
+                                         rendered="#{farmDetailsController.renderSaveBtn}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                         value="Reset Details" action="#{farmDetailsController.resetFarmDetails}"
+                                         rendered="#{farmDetailsController.renderSaveBtn}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
+                                         value="Update Farm" action="#{farmDetailsController.updateFarmDetails}"
+                                         rendered="#{!farmDetailsController.renderSaveBtn}"/>
+                        <h:commandButton styleClass="btn btn-primary" style="width: 70%" 
+                                         value="Cancel Update" action="#{farmDetailsController.cancelUpdate}"
+                                         rendered="#{!farmDetailsController.renderSaveBtn}"/>
                     </div>
                 </center>
-
+            </h:form>
+            <br/><br/>
+            <hr/>
+            <h:form prependId="false">
+                <h:panelGroup layout="block" styleClass="row">
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:outputLabel value="Search By: "/>
+                        <h:selectOneMenu styleClass="form-control"
+                                         requiredMessage="Select One Criteria"
+                                         value="#{farmDetailsController.searchCriteria}">
+                            <f:selectItem itemValue="" itemLabel="---Select One---"/>
+                            <f:selectItem itemValue="name" itemLabel="Name"/>
+                            <f:selectItem itemValue="owner.firstname" itemLabel="Owner Firstname"/>
+                            <f:selectItem itemValue="owner.lastname" itemLabel="Owner Lastname"/>
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:outputLabel value="Search Text: "/>
+                        <h:inputText styleClass="form-control" pt:placeholder="Search Text"
+                                     value="#{farmDetailsController.searchText}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" styleClass="col-md-4">
+                        <h:commandButton value="Search" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0" 
+                                         action="#{farmDetailsController.searchFarmDetails}"/>
+                        <h:commandButton value="Reset" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0"
+                                         action="#{farmDetailsController.resetFarmDetailSearch}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <br/>
+                <h:panelGroup layout="block" class="row">
+                    <h:panelGroup layout="block" class="col-md-12">
+                        <!--resizableColumns="true" style="margin-bottom:20px"-->
+                        <p:dataTable var="manage_farm" paginator="true" 
+                                     paginatorPosition="bottom" rows="5" value="#{farmDetailsController.farmDetailsDataModel}"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
+                                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                     rowsPerPageTemplate="5,10,15"  reflow="true">
+                            <f:facet name="header">
+                                <h:outputText value="List of Farm Details"/>
+                            </f:facet>
+                            <p:column headerText="Name" >
+                                <h:outputText value="#{manage_farm.name.length() gt 12 ? manage_farm.name.substring(0, 11).concat('...'): manage_farm.name}" />
+                            </p:column>
+                            <p:column headerText="Main Plant" priority="2">
+                                <h:outputText value="#{manage_farm.mainPlantation}"/>
+                            </p:column>
+                            <p:column headerText="Location" priority="4" >
+                                <h:outputText value="#{manage_farm.location}"/>
+                            </p:column>
+                            <p:column headerText="Owner" >
+                                <h:outputText value="#{manage_farm.owner.firstname} #{manage_farm.owner.lastname}"/>
+                            </p:column>
+                            <p:column headerText="Contact" priority="3">
+                                <h:outputText value="#{manage_farm.owner.phoneNumber}"/>
+                            </p:column>
+                            <p:column headerText="Options" >
+                                <h:commandLink value="Select" style="text-decoration: underline;color: green"
+                                               action="#{farmDetailsController.rowDataFarmDetails}"/>
+                            </p:column>
+                        </p:dataTable> 
+                    </h:panelGroup>
+                </h:panelGroup>
             </h:form>
         </ui:composition>
     </body>

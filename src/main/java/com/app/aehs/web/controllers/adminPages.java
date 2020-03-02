@@ -7,14 +7,15 @@ package com.app.aehs.web.controllers;
 
 import javax.inject.Named;
 import java.io.Serializable;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author Iddrisu Sibdow SIAJ
  */
 @Named(value = "adminPages")
-@RequestScoped
+@SessionScoped
 public class adminPages implements Serializable {
 
     private boolean renderWelcome = true;
@@ -26,6 +27,9 @@ public class adminPages implements Serializable {
     private boolean renderAnalyticsSearch = false;
     private boolean renderFarmerInfoSearch = false;
     private boolean renderChangePassword = false;
+
+//    @Inject
+//    private mLPrediction lp;
 
     /**
      * Creates a new instance of adminPages
@@ -82,6 +86,8 @@ public class adminPages implements Serializable {
     }
 
     public void MLPredict() {
+//        lp.setRenderPrediction(false);
+
         renderWelcome = false;
         renderRegisterUser = false;
         renderRegisterFarmer = false;

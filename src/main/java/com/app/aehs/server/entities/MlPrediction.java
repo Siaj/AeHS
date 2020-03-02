@@ -38,7 +38,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MlPrediction.findByInputParam3", query = "SELECT m FROM MlPrediction m WHERE m.inputParam3 = :inputParam3")
     , @NamedQuery(name = "MlPrediction.findByInputParam4", query = "SELECT m FROM MlPrediction m WHERE m.inputParam4 = :inputParam4")
     , @NamedQuery(name = "MlPrediction.findByInputParam5", query = "SELECT m FROM MlPrediction m WHERE m.inputParam5 = :inputParam5")
-    , @NamedQuery(name = "MlPrediction.findByPrediction", query = "SELECT m FROM MlPrediction m WHERE m.prediction = :prediction")
     , @NamedQuery(name = "MlPrediction.findByUpdated", query = "SELECT m FROM MlPrediction m WHERE m.updated = :updated")
     , @NamedQuery(name = "MlPrediction.findByDeleted", query = "SELECT m FROM MlPrediction m WHERE m.deleted = :deleted")})
 public class MlPrediction implements Serializable {
@@ -50,7 +49,7 @@ public class MlPrediction implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "_id")
     private String id;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date date;
     @Size(max = 50)
     @Column(name = "input_param1")
@@ -67,8 +66,6 @@ public class MlPrediction implements Serializable {
     @Size(max = 50)
     @Column(name = "input_param5")
     private String inputParam5;
-    @Size(max = 50)
-    private String prediction;
     @Size(max = 10)
     private String updated;
     @Size(max = 10)
@@ -76,6 +73,9 @@ public class MlPrediction implements Serializable {
     @JoinColumn(name = "farm_detail", referencedColumnName = "_id")
     @ManyToOne
     private FarmDetail farmDetail;
+    @JoinColumn(name = "prediction", referencedColumnName = "_id")
+    @ManyToOne
+    private Diseases prediction;
 
     public MlPrediction() {
     }
@@ -140,14 +140,6 @@ public class MlPrediction implements Serializable {
         this.inputParam5 = inputParam5;
     }
 
-    public String getPrediction() {
-        return prediction;
-    }
-
-    public void setPrediction(String prediction) {
-        this.prediction = prediction;
-    }
-
     public String getUpdated() {
         return updated;
     }
@@ -170,6 +162,14 @@ public class MlPrediction implements Serializable {
 
     public void setFarmDetail(FarmDetail farmDetail) {
         this.farmDetail = farmDetail;
+    }
+
+    public Diseases getPrediction() {
+        return prediction;
+    }
+
+    public void setPrediction(Diseases prediction) {
+        this.prediction = prediction;
     }
 
     @Override

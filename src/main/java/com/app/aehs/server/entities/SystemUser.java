@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SystemUser.findAll", query = "SELECT s FROM SystemUser s")
-    , @NamedQuery(name = SystemUser.FIND_BY_USERNAME_PASSWORD, query = "SELECT s FROM SystemUser s WHERE s.username = :username AND s.password = :password")
+    ,@NamedQuery(name = SystemUser.FIND_BY_USERNAME_PASSWORD, query = "SELECT s FROM SystemUser s WHERE s.username = :username AND s.password = :password")
     , @NamedQuery(name = "SystemUser.findById", query = "SELECT s FROM SystemUser s WHERE s.id = :id")
     , @NamedQuery(name = "SystemUser.findByFirstname", query = "SELECT s FROM SystemUser s WHERE s.firstname = :firstname")
     , @NamedQuery(name = "SystemUser.findByLastname", query = "SELECT s FROM SystemUser s WHERE s.lastname = :lastname")
@@ -52,43 +52,25 @@ public class SystemUser implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "_id")
     private String id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String firstname;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String lastname;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String username;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     private String password;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "account_status")
     private String accountStatus;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 10)
+    @Size(max = 10)
     private String gender;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
+    @Size(max = 25)
     @Column(name = "phone_number")
     private String phoneNumber;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String updated;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     private String deleted;
     @JoinColumn(name = "user_role", referencedColumnName = "_id")
     @ManyToOne
@@ -101,19 +83,6 @@ public class SystemUser implements Serializable {
 
     public SystemUser(String id) {
         this.id = id;
-    }
-
-    public SystemUser(String id, String firstname, String lastname, String username, String password, String accountStatus, String gender, String phoneNumber, String updated, String deleted) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.password = password;
-        this.accountStatus = accountStatus;
-        this.gender = gender;
-        this.phoneNumber = phoneNumber;
-        this.updated = updated;
-        this.deleted = deleted;
     }
 
     public String getId() {

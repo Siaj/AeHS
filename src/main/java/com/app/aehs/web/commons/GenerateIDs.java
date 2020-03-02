@@ -9,6 +9,7 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -31,8 +32,8 @@ algorithm in the cryptographic arena.
 
         return output;
     }
-    
-     public static String generateUsername(String surname, String othername) {
+
+    public static String generateUsername(String surname, String othername) {
 
         String initials = "";
 
@@ -51,6 +52,11 @@ algorithm in the cryptographic arena.
         }
 
         return (initials.toLowerCase() + surname.toLowerCase());
+
+    }
+
+    public static String generateID() {
+        return UUID.randomUUID().toString();
 
     }
 }

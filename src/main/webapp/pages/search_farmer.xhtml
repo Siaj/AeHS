@@ -26,19 +26,25 @@ and open the template in the editor.
                     <h:panelGroup layout="block" styleClass="col-md-4">
                         <h:outputLabel value="Search By: "/>
                         <h:selectOneMenu styleClass="form-control" id="selectFarmer"
-                                         requiredMessage="Select One Criteria">
+                                         requiredMessage="Select One Criteria"
+                                         value="#{generalSearch.searchCriteria}">
                             <f:selectItem itemValue="" itemLabel="---Select One---"/>
-                            <f:selectItem itemValue="" itemLabel="Name"/>
-                            <f:selectItem itemValue="" itemLabel="Contact"/>
+                            <f:selectItem itemValue="firstname" itemLabel="Name"/>
+                            <f:selectItem itemValue="phoneNumber" itemLabel="Contact"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="col-md-4">
                         <h:outputLabel value="Search Text: "/>
-                        <h:inputText id="searchFarmerText" styleClass="form-control" pt:placeholder="Search Text"/>
+                        <h:inputText id="searchFarmerText" styleClass="form-control" pt:placeholder="Search Text"
+                                     value="#{generalSearch.searchText}"/>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="col-md-4">
-                        <h:commandButton value="Search" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0" />
-                        <h:commandButton value="Reset" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0"/>
+                        <h:commandButton value="Search" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0" 
+                                         action="#{generalSearch.searchFarmer}"/>
+                        <h:commandButton value="Reset" styleClass="btn btn-primary btn-fill" 
+                                         style="margin: 30px 3px 0 0"
+                                         action="#{generalSearch.resetSearch}"/>
                     </h:panelGroup>
                 </h:panelGroup>
                 <br/>
@@ -46,51 +52,54 @@ and open the template in the editor.
                 <h:panelGroup layout="block" class="row">
                     <h:panelGroup layout="block" class="col-md-12">
                         <!--resizableColumns="true" style="margin-bottom:20px"-->
-                        <p:dataTable var="manage_prediction" paginator="true" id="search_farmer"
-                                     paginatorPosition="bottom" rows="10"
+                        <p:dataTable var="search_farm_user" paginator="true" id="search_farmer_user"
+                                     paginatorPosition="bottom" rows="5" value="#{generalSearch.farmersDataTable}"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
                                      currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                                     rowsPerPageTemplate="5,10,15">
+                                     rowsPerPageTemplate="5,10,15" reflow="true">
                             <f:facet name="header">
                                 <h:outputText value="List of Farmers"/>
                             </f:facet>
                             <p:column headerText="Firstname" style="width: 150px">
-                                <h:outputText value="" />
+                                <h:outputText value="#{search_farm_user.firstname}" />
                             </p:column>
                             <p:column headerText="Lastname" style="width: 150px">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{search_farm_user.lastname}"/>
                             </p:column>
                             <p:column headerText="Gender" priority="3" style="width: 100px">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{search_farm_user.gender}"/>
                             </p:column>
                             <p:column headerText="Status" style="width: 150px">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{search_farm_user.accountStatus}"/>
                             </p:column>
                             <p:column headerText="Contact" style="width: 150px" priority="2">
-                                <h:outputText value=""/>
+                                <h:outputText value="#{search_farm_user.phoneNumber}"/>
                             </p:column>
                             <p:column headerText="Options" style="width: 100px">
-                                <h:commandLink value="Select" style="text-decoration: underline;color: green"/>
+                                <h:commandLink value="Select" style="text-decoration: underline;color: green"
+                                               action="#{generalSearch.rowSelectFarmer}"/>
                             </p:column>
                         </p:dataTable> 
                     </h:panelGroup>
                 </h:panelGroup>
-
-                <br/><br/><hr/>
-
-                <h:panelGroup layout="block" rendered="true">
+            </h:form>
+            <br/><br/><hr/>
+            <h:panelGroup layout="block" rendered="#{generalSearch.renderSearchedView}">
+                <h:form prependId="false">
 
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Firstname</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" 
+                                             value="#{generalSearch.systemUser.firstname}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Lastname</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
+                                <h:inputText styleClass="form-control" readonly="true" 
+                                             value="#{generalSearch.systemUser.lastname}"/>
                             </div>
                         </div>
                     </div>
@@ -99,38 +108,50 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Contact</label>
-                                <h:inputText styleClass="form-control" readonly="true" value="Generated Username"/>
+                                <h:inputText styleClass="form-control" readonly="true" 
+                                             value="#{generalSearch.systemUser.phoneNumber}"/>
                             </div>
                         </div>
                         <div class="col-md-6"></div>
                     </div>
-
+                    <br/><br/>
                     <hr/>
 
                     <!--Details of Farms [List of farms] Shall go here-->
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Farm Name</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="inputFirstName">Owner</label>
-                                <h:inputText styleClass="form-control" readonly="true" value=""/>
-                            </div>
-                        </div>
-                    </div>
+                    <h:panelGroup layout="block" class="row">
+                        <h:panelGroup layout="block" class="col-md-12">
+                            <!--resizableColumns="true" style="margin-bottom:20px"-->
+                            <p:dataTable var="owner_farms" paginator="true" id="owner_farmer_details"
+                                         paginatorPosition="bottom" rows="5" value="#{generalSearch.farmOwnerFarmDataTable}"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
+                                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                         rowsPerPageTemplate="5,10,15"  reflow="true">
+                                <f:facet name="header">
+                                    <h:outputText value="List of Farms Owned"/>
+                                </f:facet>
+                                <p:column headerText="Name">
+                                    <h:outputText value="#{owner_farms.name}" />
+                                </p:column>
+                                <p:column headerText="Main Plant">
+                                    <h:outputText value="#{owner_farms.mainPlantation}"/>
+                                </p:column>
+                                <p:column headerText="Location">
+                                    <h:outputText value="#{owner_farms.location}"/>
+                                </p:column>
+                            </p:dataTable> 
+                        </h:panelGroup>
+                    </h:panelGroup>
 
+                    <br/><br/>
                     <center>
                         <div class="form-group mt-4 mb-0">
-                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel"/>
+                            <h:commandButton styleClass="btn btn-primary" style="width: 70%" value="Cancel"
+                                             action="#{generalSearch.resetSelection}"/>
                         </div>
                     </center>
-                </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
 
-            </h:form>
         </ui:composition>
     </body>
 </html>
