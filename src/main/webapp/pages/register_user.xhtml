@@ -81,7 +81,7 @@ and open the template in the editor.
                                                  styleClass="form-control" id="sysUserRole" 
                                                  value="#{systemUserController.selectedRole}"
                                                  required="#{!empty param['saveUser']}" 
-                                                 requiredMessage="*required"/>
+                                                 requiredMessage="*required">
                                 <f:selectItems value="#{commonOptions.userRoleOptions}"/>
                                 </h:selectOneMenu>
                                 <h:message for="sysUserRole" class="errorMessage"/>
