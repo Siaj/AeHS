@@ -196,12 +196,9 @@ public class systemUserController implements Serializable {
     public void searchSystemUser() {
         if (searchCriteria == null || searchText.equals("") || searchCriteria.equals("null")) {
             JSFUtility.warnMessage("Info: ", "Search Parameters not well defined to complete search, please enter them to find a specific detail");
+            listOfSystemUsers = getListOfSystemUsers();
         } else {
-            if (getListOfFarmers().isEmpty()) {
-                JSFUtility.infoMessage("Empty List:", "No System User with Such Criteria Found");
-            } else {
-                listOfSystemUsers = getListOfSystemUsers();
-            }
+            listOfSystemUsers = getListOfSystemUsers();
         }
     }
 
@@ -210,7 +207,6 @@ public class systemUserController implements Serializable {
             JSFUtility.warnMessage("Info: ", "Search Parameters not well defined to complete search, please enter them to find a specific detail");
             listOfFarmers = getListOfFarmers();
         } else {
-            System.out.println("Here for search");
             listOfFarmers = getListOfFarmers();
         }
     }
@@ -229,7 +225,7 @@ public class systemUserController implements Serializable {
     }
 
     public void rowSelectDataSysUser() {
-        systemUser = (SystemUser)systemUserDataTable.getRowData();
+        systemUser = (SystemUser) systemUserDataTable.getRowData();
         userRole = systemUser.getUserRole();
         selectedRole = String.valueOf(userRole.getId());
 
@@ -245,23 +241,23 @@ public class systemUserController implements Serializable {
         } else {
             listOfFarmers = systemUserFacade.farmerFindByAttribute(getSearchCriteria(), getSearchText(), "STRING", true);
         }
-        
+
         return listOfFarmers;
     }
-    
+
     public void setListOfFarmers(List<SystemUser> listOfFarmers) {
         this.listOfFarmers = listOfFarmers;
     }
-    
+
     public DataModel<SystemUser> getFarmerDataTable() {
         farmerDataTable = new ListDataModel<>(getListOfFarmers());
         return farmerDataTable;
     }
-    
+
     public void setFarmerDataTable(DataModel<SystemUser> farmerDataTable) {
         this.farmerDataTable = farmerDataTable;
     }
-    
+
     public List<SystemUser> getListOfSystemUsers() {
         if (searchCriteria == null || searchText.equals("") || searchCriteria.equals("null")) {
             listOfSystemUsers = systemUserFacade.systemUserGetAll(true);
@@ -270,156 +266,155 @@ public class systemUserController implements Serializable {
         }
         return listOfSystemUsers;
     }
-    
+
     public void setListOfSystemUsers(List<SystemUser> listOfSystemUsers) {
         this.listOfSystemUsers = listOfSystemUsers;
     }
-    
+
     public DataModel<SystemUser> getSystemUserDataTable() {
         systemUserDataTable = new ListDataModel<>(getListOfSystemUsers());
         return systemUserDataTable;
     }
-    
+
     public void setSystemUserDataTable(DataModel<SystemUser> systemUserDataTable) {
         this.systemUserDataTable = systemUserDataTable;
     }
-    
+
     public String getSearchCriteria() {
         return searchCriteria;
     }
-    
+
     public void setSearchCriteria(String searchCriteria) {
         this.searchCriteria = searchCriteria;
     }
-    
+
     public String getSearchText() {
         return searchText;
     }
-    
+
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
-    
+
     public boolean isRenderAfterSave() {
         return renderAfterSave;
     }
-    
+
     public void setRenderAfterSave(boolean renderAfterSave) {
         this.renderAfterSave = renderAfterSave;
     }
-    
+
     public SystemUserFacade getSystemUserFacade() {
         return systemUserFacade;
     }
-    
+
     public void setSystemUserFacade(SystemUserFacade systemUserFacade) {
         this.systemUserFacade = systemUserFacade;
     }
-    
+
     public SystemUser getSystemUser() {
         return systemUser;
     }
-    
+
     public void setSystemUser(SystemUser systemUser) {
         this.systemUser = systemUser;
     }
-    
+
     public UserRole getUserRole() {
         return userRole;
     }
-    
+
     public void setUserRole(UserRole userRole) {
         this.userRole = userRole;
     }
-    
+
     public String getSelectedRole() {
         return selectedRole;
     }
-    
+
     public void setSelectedRole(String selectedRole) {
         this.selectedRole = selectedRole;
     }
-    
+
     public UserRoleFacade getUserRoleFacade() {
         return userRoleFacade;
     }
-    
+
     public void setUserRoleFacade(UserRoleFacade userRoleFacade) {
         this.userRoleFacade = userRoleFacade;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     public String getHashedPassword() {
         return hashedPassword;
     }
-    
+
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
     }
-    
+
     public String getLastname() {
         return lastname;
     }
-    
+
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
+
     public String getFirstname() {
         return firstname;
     }
-    
+
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-    
+
     public String getUserGroup() {
         return userGroup;
     }
-    
+
     public void setUserGroup(String userGroup) {
         this.userGroup = userGroup;
     }
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public void setUsername(String username) {
         this.username = username;
     }
-    
+
     public boolean isRenderSave() {
         return renderSave;
     }
-    
+
     public void setRenderSave(boolean renderSave) {
         this.renderSave = renderSave;
     }
-    
+
     public UserAccessController getAccessController() {
         return accessController;
     }
-    
+
     public void setAccessController(UserAccessController accessController) {
         this.accessController = accessController;
     }
-    
+
     public boolean isDisableGroup() {
         return disableGroup;
     }
-    
+
     public void setDisableGroup(boolean disableGroup) {
         this.disableGroup = disableGroup;
     }
-    
-//</editor-fold>
 
+//</editor-fold>
 }

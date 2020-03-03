@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "ml_prediction", catalog = "aehs_db", schema = "")
+@Table(name = "ml_prediction")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "MlPrediction.findAll", query = "SELECT m FROM MlPrediction m")
@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MlPrediction.findByInputParam2", query = "SELECT m FROM MlPrediction m WHERE m.inputParam2 = :inputParam2")
     , @NamedQuery(name = "MlPrediction.findByInputParam3", query = "SELECT m FROM MlPrediction m WHERE m.inputParam3 = :inputParam3")
     , @NamedQuery(name = "MlPrediction.findByInputParam4", query = "SELECT m FROM MlPrediction m WHERE m.inputParam4 = :inputParam4")
-    , @NamedQuery(name = "MlPrediction.findByInputParam5", query = "SELECT m FROM MlPrediction m WHERE m.inputParam5 = :inputParam5")
+    , @NamedQuery(name = "MlPrediction.findByDiseases", query = "SELECT m FROM MlPrediction m WHERE m.diseases = :diseases")
+    , @NamedQuery(name = "MlPrediction.findByDiseaseName", query = "SELECT m FROM MlPrediction m WHERE m.diseaseName = :diseaseName")
     , @NamedQuery(name = "MlPrediction.findByUpdated", query = "SELECT m FROM MlPrediction m WHERE m.updated = :updated")
     , @NamedQuery(name = "MlPrediction.findByDeleted", query = "SELECT m FROM MlPrediction m WHERE m.deleted = :deleted")})
 public class MlPrediction implements Serializable {
@@ -49,6 +50,7 @@ public class MlPrediction implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "_id")
     private String id;
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
     @Size(max = 50)
@@ -63,19 +65,21 @@ public class MlPrediction implements Serializable {
     @Size(max = 50)
     @Column(name = "input_param4")
     private String inputParam4;
-    @Size(max = 50)
-    @Column(name = "input_param5")
-    private String inputParam5;
+    @Size(max = 100)
+    @Column(name = "diseases")
+    private String diseases;
+    @Size(max = 100)
+    @Column(name = "disease_name")
+    private String diseaseName;
     @Size(max = 10)
+    @Column(name = "updated")
     private String updated;
     @Size(max = 10)
+    @Column(name = "deleted")
     private String deleted;
     @JoinColumn(name = "farm_detail", referencedColumnName = "_id")
     @ManyToOne
     private FarmDetail farmDetail;
-    @JoinColumn(name = "prediction", referencedColumnName = "_id")
-    @ManyToOne
-    private Diseases prediction;
 
     public MlPrediction() {
     }
@@ -132,12 +136,20 @@ public class MlPrediction implements Serializable {
         this.inputParam4 = inputParam4;
     }
 
-    public String getInputParam5() {
-        return inputParam5;
+    public String getDiseases() {
+        return diseases;
     }
 
-    public void setInputParam5(String inputParam5) {
-        this.inputParam5 = inputParam5;
+    public void setDiseases(String diseases) {
+        this.diseases = diseases;
+    }
+
+    public String getDiseaseName() {
+        return diseaseName;
+    }
+
+    public void setDiseaseName(String diseaseName) {
+        this.diseaseName = diseaseName;
     }
 
     public String getUpdated() {
@@ -162,14 +174,6 @@ public class MlPrediction implements Serializable {
 
     public void setFarmDetail(FarmDetail farmDetail) {
         this.farmDetail = farmDetail;
-    }
-
-    public Diseases getPrediction() {
-        return prediction;
-    }
-
-    public void setPrediction(Diseases prediction) {
-        this.prediction = prediction;
     }
 
     @Override

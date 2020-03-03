@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "farm_detail", catalog = "aehs_db", schema = "")
+@Table(name = "farm_detail")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "FarmDetail.findAll", query = "SELECT f FROM FarmDetail f")
@@ -47,15 +47,19 @@ public class FarmDetail implements Serializable {
     @Column(name = "_id")
     private String id;
     @Size(max = 255)
+    @Column(name = "name")
     private String name;
     @Size(max = 255)
     @Column(name = "main_plantation")
     private String mainPlantation;
     @Size(max = 255)
+    @Column(name = "location")
     private String location;
     @Size(max = 10)
+    @Column(name = "updated")
     private String updated;
     @Size(max = 10)
+    @Column(name = "deleted")
     private String deleted;
     @JoinColumn(name = "owner", referencedColumnName = "_id")
     @ManyToOne

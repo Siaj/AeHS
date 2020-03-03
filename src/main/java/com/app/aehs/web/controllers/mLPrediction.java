@@ -178,10 +178,10 @@ public class mLPrediction implements Serializable {
 //        LocalDate dateTime = LocalDate.now();
 //        DateTimeFormatter formateEntry = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         java.sql.Date dateObj = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        System.out.println("Date Now: " + dateObj);
+//        System.out.println("Date Now: " + dateObj);
 
         String predId = "pred-" + GenerateIDs.generateID();
-        System.out.println("ID: " + predId);
+//        System.out.println("ID: " + predId);
 
         predPrecip = precipFacade.find(precip);
         predTemp = temperatureFacade.find(temp);
@@ -196,7 +196,8 @@ public class mLPrediction implements Serializable {
         mlPrediction.setInputParam3(predPlantStand.getId());
         mlPrediction.setInputParam4(predDate.getId());
 
-        mlPrediction.setPrediction(diseases);
+        mlPrediction.setDiseases(diseases.getDiseaseId());
+        mlPrediction.setDiseaseName(diseases.getDescription());
 
         if (farmDetailSelected == null) {
             JSFUtility.warnMessage("Note: ", "Associated Farm Details need to be selected before save could proceed");
@@ -245,9 +246,9 @@ public class mLPrediction implements Serializable {
         predTemp = temperatureFacade.find(mlPrediction.getInputParam2());
         predPlantStand = plantStandFacade.find(mlPrediction.getInputParam3());
         predDate = dateFacade.find(mlPrediction.getInputParam4());
+        diseases = diseasesFacade.find(mlPrediction.getDiseases());
 
         farmDetail = mlPrediction.getFarmDetail();
-        diseases = mlPrediction.getPrediction();
 
         renderManagePrediction = true;
     }
@@ -325,7 +326,7 @@ public class mLPrediction implements Serializable {
     }
 
     public List<MlPrediction> getMLPredictionList() {
-        MLPredictionList = predictionFacade.findAll();
+        MLPredictionList = predictionFacade.mlPredictionsFindAll();
         return MLPredictionList;
     }
 

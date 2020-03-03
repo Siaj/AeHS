@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "pred_date", catalog = "aehs_db", schema = "")
+@Table(name = "pred_date")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "PredDate.findAll", query = "SELECT p FROM PredDate p")
@@ -40,10 +40,13 @@ public class PredDate implements Serializable {
     @Column(name = "_id")
     private String id;
     @Size(max = 70)
+    @Column(name = "value")
     private String value;
     @Size(max = 10)
+    @Column(name = "updated")
     private String updated;
     @Size(max = 10)
+    @Column(name = "deleted")
     private String deleted;
 
     public PredDate() {

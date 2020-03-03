@@ -29,7 +29,7 @@ and open the template in the editor.
                                          requiredMessage="Select One Criteria"
                                          value="#{generalSearch.searchCriteria}">
                             <f:selectItem itemValue="" itemLabel="---Select One---"/>
-                            <f:selectItem itemValue="prediction.name" itemLabel="Disease"/>
+                            <f:selectItem itemValue="diseaseName" itemLabel="Disease"/>
                             <f:selectItem itemValue="farmDetail.name" itemLabel="Farm Name"/>
                         </h:selectOneMenu>
                     </h:panelGroup>
@@ -76,7 +76,7 @@ and open the template in the editor.
                                 <h:outputText value="#{search_predict.inputParam4}"/>
                             </p:column>
                             <p:column headerText="Prediction">
-                                <h:outputText value="#{search_predict.prediction.name}"/>
+                                <h:outputText value="#{search_predict.diseaseName}"/>
                             </p:column>
                             <p:column headerText="Farm">
                                 <h:outputText value="#{search_predict.farmDetail.name}"/>

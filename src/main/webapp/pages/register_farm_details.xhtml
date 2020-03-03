@@ -26,16 +26,23 @@ and open the template in the editor.
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputFirstName">Farm Name</label>
-                            <h:inputText styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.name}"/>
+                            <h:inputText styleClass="form-control" pt:placeholder="Enter something pls" 
+                                         value="#{farmDetailsController.farmDetail.name}"
+                                         required="#{!empty param['saveFarmDetails']}" 
+                                         requiredMessage="*required" id="farmeDetName"/>
+                            <h:message for="farmeDetName" class="errorMessage"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputFirstName">Farm Owner</label>
                             <!--<h:inputText id="inputparam3" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
-                            <h:selectOneMenu styleClass="form-control" value="#{farmDetailsController.farmOwner}">
+                            <h:selectOneMenu styleClass="form-control" value="#{farmDetailsController.farmOwner}"
+                                             required="#{!empty param['saveFarmDetails']}" 
+                                             requiredMessage="*required" id="farmDetOwner">
                                 <f:selectItems value="#{commonOptions.systemUsersOptions}"/>
                             </h:selectOneMenu>
+                            <h:message for="farmDetOwner" class="errorMessage"/>
                         </div>
                     </div>
 
@@ -45,13 +52,23 @@ and open the template in the editor.
                         <div class="form-group">
                             <label class="small mb-1" for="inputLastName">Main Plantation</label>
                             <!--<h:inputText id="farmLName" styleClass="form-control" pt:placeholder="Enter something pls"/>-->
-                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.mainPlantation}" />
+                            <h:inputTextarea rows="3" styleClass="form-control" id="farmDetMainPlant"
+                                             pt:placeholder="Enter something pls" 
+                                             value="#{farmDetailsController.farmDetail.mainPlantation}" 
+                                             required="#{!empty param['saveFarmDetails']}" 
+                                             requiredMessage="*required"/>
+                            <h:message for="farmDetMainPlant" class="errorMessage"/>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="small mb-1" for="inputLastName">Location</label>
-                            <h:inputTextarea rows="3" styleClass="form-control" pt:placeholder="Enter something pls" value="#{farmDetailsController.farmDetail.location}"/>
+                            <h:inputTextarea rows="3" styleClass="form-control"  id="farmDetLoc"
+                                             pt:placeholder="Enter something pls" 
+                                             value="#{farmDetailsController.farmDetail.location}"
+                                             required="#{!empty param['saveFarmDetails']}" 
+                                             requiredMessage="*required"/>
+                            <h:message for="farmDetLoc" class="errorMessage"/>
                         </div>
                     </div>
                 </div>
@@ -60,13 +77,17 @@ and open the template in the editor.
                     <div class="form-group mt-4 mb-0">
                         <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                          value="Register Farm" action="#{farmDetailsController.saveFarmDetails}"
-                                         rendered="#{farmDetailsController.renderSaveBtn}"/>
+                                         rendered="#{farmDetailsController.renderSaveBtn}">
+                            <f:param name="saveFarmDetails" value="true"/>
+                        </h:commandButton>
                         <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                          value="Reset Details" action="#{farmDetailsController.resetFarmDetails}"
                                          rendered="#{farmDetailsController.renderSaveBtn}"/>
                         <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                          value="Update Farm" action="#{farmDetailsController.updateFarmDetails}"
-                                         rendered="#{!farmDetailsController.renderSaveBtn}"/>
+                                         rendered="#{!farmDetailsController.renderSaveBtn}">
+                            <f:param name="saveFarmDetails" value="true"/>
+                        </h:commandButton>
                         <h:commandButton styleClass="btn btn-primary" style="width: 70%" 
                                          value="Cancel Update" action="#{farmDetailsController.cancelUpdate}"
                                          rendered="#{!farmDetailsController.renderSaveBtn}"/>

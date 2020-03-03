@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TemperatureFacade extends AbstractFacade<Temperature> {
 
-    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
+    @PersistenceContext(unitName = "aehsPU")
     private EntityManager em;
 
     @Override

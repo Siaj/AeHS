@@ -37,7 +37,12 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Last Name</label>
-                                <h:inputText id="sysLName" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.lastname}"/>
+                                <h:inputText id="sysLName" styleClass="form-control" 
+                                             pt:placeholder="Enter something pls" 
+                                             value="#{systemUserController.systemUser.lastname}"
+                                             required="#{!empty param['saveUser']}" 
+                                             requiredMessage="*required"/>
+                                <h:message for="sysLName" class="errorMessage"/>
                             </div>
                         </div>
                     </div>
@@ -46,15 +51,24 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Gender</label>
                                 <!--<h:inputText id="inputparam3" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
-                                <h:selectOneMenu styleClass="form-control" id="sysGender" value="#{systemUserController.systemUser.gender}">
+                                <h:selectOneMenu styleClass="form-control" id="sysGender" 
+                                                 value="#{systemUserController.systemUser.gender}"
+                                                 required="#{!empty param['saveUser']}" 
+                                                 requiredMessage="*required">
                                     <f:selectItems value="#{commonOptions.genderOptions}"/>
                                 </h:selectOneMenu>
+                                <h:message for="sysGender" class="errorMessage"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Phone Number</label>
-                                <h:inputText autocomplete="off" id="sysPhoneNum" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.phoneNumber}"/>
+                                <h:inputText autocomplete="off" id="sysPhoneNum" styleClass="form-control" 
+                                             pt:placeholder="Enter something pls" 
+                                             value="#{systemUserController.systemUser.phoneNumber}"
+                                             required="#{!empty param['saveUser']}" 
+                                             requiredMessage="*required"/>
+                                <h:message for="sysPhoneNum" class="errorMessage"/>
                             </div>
                         </div>
                     </div>
@@ -63,15 +77,25 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="small mb-1" for="inputEmailAddress">User Role</label>
                                 <!--<h:inputText autocomplete="off" id="inputparam5" styleClass="form-control py-4" pt:placeholder="Enter something pls"/>-->
-                                <h:selectOneMenu disabled="#{systemUserController.disableGroup}" styleClass="form-control" id="sysUserRole" value="#{systemUserController.selectedRole}">
-                                    <f:selectItems value="#{commonOptions.userRoleOptions}"/>
+                                <h:selectOneMenu disabled="#{systemUserController.disableGroup}" 
+                                                 styleClass="form-control" id="sysUserRole" 
+                                                 value="#{systemUserController.selectedRole}"
+                                                 required="#{!empty param['saveUser']}" 
+                                                 requiredMessage="*required"/>
+                                <f:selectItems value="#{commonOptions.userRoleOptions}"/>
                                 </h:selectOneMenu>
+                                <h:message for="sysUserRole" class="errorMessage"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Email</label>
-                                <h:inputText autocomplete="off" id="sysEmail" styleClass="form-control" pt:placeholder="Enter something pls" value="#{systemUserController.systemUser.username}"/>
+                                <h:inputText autocomplete="off" id="sysEmail" styleClass="form-control"
+                                             pt:placeholder="Enter something pls" 
+                                             value="#{systemUserController.systemUser.username}"
+                                             required="#{!empty param['saveUser']}" 
+                                             requiredMessage="*required"/>
+                                <h:message for="sysEmail" class="errorMessage"/>
                             </div>
                         </div>
                     </div>

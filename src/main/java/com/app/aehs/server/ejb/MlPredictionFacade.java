@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Stateless
 public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
 
-    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
+    @PersistenceContext(unitName = "aehsPU")
     private EntityManager em;
 
     @Override
@@ -33,34 +33,51 @@ public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
         super(MlPrediction.class);
     }
 
-    public String createPrediction(MlPrediction prediction) {
+    public String createPrediction(MlPrediction mlPrediction) {
         try {
-            prediction.setUpdated("NO");
-            prediction.setDeleted("NO");
-            super.create(prediction);
-            return prediction.getId();
+            mlPrediction.setDeleted("NO");
+            mlPrediction.setUpdated("NO");
+            super.create(mlPrediction);
+            return mlPrediction.getId();
+
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
-    public boolean deletePrediction(MlPrediction prediction) {
+    public boolean deletePrediction(MlPrediction mlPrediction) {
         try {
-            super.remove(prediction);
+            super.remove(mlPrediction);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
     }
-    
-     public List<MlPrediction> mlPredictionFindByAttribute(String mlPredAttribute, Object attributeValue, String fieldType, boolean includeLogicallyDeleted) {
+
+    public List<MlPrediction> mlPredictionsFindAll() {
+        List<MlPrediction> listOfMlPredictions = null;
+        String qryString;
+
+        qryString = "SELECT e FROM MlPrediction e ";
+
+        try {
+            listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).getResultList();
+            return listOfMlPredictions;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
+    }
+
+    public List<MlPrediction> mlPredictionFindByAttribute(String mlPredictionAttribute, Object attributeValue, String fieldType, boolean includeLogicallyDeleted) {
         List<MlPrediction> listOfMlPredictions = null;
 
         String qryString;
 
         qryString = "SELECT e FROM MlPrediction e ";
-        qryString += "WHERE e." + mlPredAttribute + " =:mlPredAttribute ";
+        qryString += "WHERE e." + mlPredictionAttribute + " =:mlPredictionAttribute ";
 
         try {
             if (includeLogicallyDeleted == true) {
@@ -69,13 +86,13 @@ public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
             }
 
             if (fieldType.equalsIgnoreCase("NUMBER")) {
-                listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).setParameter("mlPredAttribute", attributeValue).getResultList();
+                listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).setParameter("mlPredictionAttribute", attributeValue).getResultList();
             } else if (fieldType.equalsIgnoreCase("STRING")) {
                 qryString = "SELECT e FROM MlPrediction e ";
-                qryString += "WHERE e." + mlPredAttribute + " LIKE '%" + attributeValue + "%'";
+                qryString += "WHERE e." + mlPredictionAttribute + " LIKE '%" + attributeValue + "%'";
                 listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).getResultList();
             } else if (fieldType.equalsIgnoreCase("DATE")) {
-                listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).setParameter("mlPredAttribute", (Date) attributeValue, TemporalType.DATE).getResultList();
+                listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).setParameter("mlPredictionAttribute", (Date) attributeValue, TemporalType.DATE).getResultList();
             }
 
             return listOfMlPredictions;

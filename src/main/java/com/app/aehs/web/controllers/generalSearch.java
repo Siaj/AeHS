@@ -5,6 +5,7 @@
  */
 package com.app.aehs.web.controllers;
 
+import com.app.aehs.server.ejb.DiseasesFacade;
 import com.app.aehs.server.ejb.FarmDetailFacade;
 import com.app.aehs.server.ejb.MlPredictionFacade;
 import com.app.aehs.server.ejb.PlantStandFacade;
@@ -55,6 +56,8 @@ public class generalSearch implements Serializable {
     private PredDateFacade dateFacade;
     @Inject
     private FarmDetailFacade farmDetailFacade;
+    @Inject
+    private DiseasesFacade diseasesFacade;
 
     private MlPrediction mlPrediction = new MlPrediction();
     private SystemUser systemUser = new SystemUser();
@@ -114,9 +117,9 @@ public class generalSearch implements Serializable {
         predTemp = temperatureFacade.find(mlPrediction.getInputParam2());
         predPlantStand = plantStandFacade.find(mlPrediction.getInputParam3());
         predDate = dateFacade.find(mlPrediction.getInputParam4());
+        diseases = diseasesFacade.find(mlPrediction.getDiseases());
 
         farmDetail = mlPrediction.getFarmDetail();
-        diseases = mlPrediction.getPrediction();
 
         renderSearchedView = true;
     }

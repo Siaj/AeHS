@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "user_role", catalog = "aehs_db", schema = "")
+@Table(name = "user_role")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UserRole.findAll", query = "SELECT u FROM UserRole u")
@@ -46,8 +46,10 @@ public class UserRole implements Serializable {
     @Column(name = "role_name")
     private String roleName;
     @Size(max = 10)
+    @Column(name = "updated")
     private String updated;
     @Size(max = 10)
+    @Column(name = "deleted")
     private String deleted;
     @OneToMany(mappedBy = "userRole")
     private List<SystemUser> systemUserList;

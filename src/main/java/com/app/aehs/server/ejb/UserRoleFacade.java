@@ -19,7 +19,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class UserRoleFacade extends AbstractFacade<UserRole> {
 
-    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
+    @PersistenceContext(unitName = "aehsPU")
     private EntityManager em;
 
     @Override
@@ -31,7 +31,7 @@ public class UserRoleFacade extends AbstractFacade<UserRole> {
         super(UserRole.class);
     }
     
-   public List<UserRole> roleGetAll(boolean includeLogicallyDeleted) {
+    public List<UserRole> roleGetAll(boolean includeLogicallyDeleted) {
         List<UserRole> listOfRole = null;
 
         String qryString;

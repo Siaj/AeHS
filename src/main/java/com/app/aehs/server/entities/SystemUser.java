@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Iddrisu Sibdow SIAJ
  */
 @Entity
-@Table(name = "system_user", catalog = "aehs_db", schema = "")
+@Table(name = "system_user")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SystemUser.findAll", query = "SELECT s FROM SystemUser s")
@@ -53,24 +53,31 @@ public class SystemUser implements Serializable {
     @Column(name = "_id")
     private String id;
     @Size(max = 50)
+    @Column(name = "firstname")
     private String firstname;
     @Size(max = 50)
+    @Column(name = "lastname")
     private String lastname;
     @Size(max = 50)
+    @Column(name = "username")
     private String username;
     @Size(max = 255)
+    @Column(name = "password")
     private String password;
     @Size(max = 50)
     @Column(name = "account_status")
     private String accountStatus;
     @Size(max = 10)
+    @Column(name = "gender")
     private String gender;
     @Size(max = 25)
     @Column(name = "phone_number")
     private String phoneNumber;
     @Size(max = 50)
+    @Column(name = "updated")
     private String updated;
     @Size(max = 50)
+    @Column(name = "deleted")
     private String deleted;
     @JoinColumn(name = "user_role", referencedColumnName = "_id")
     @ManyToOne

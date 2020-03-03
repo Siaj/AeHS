@@ -9,7 +9,6 @@ import com.app.aehs.server.entities.SystemUser;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,7 +22,7 @@ import javax.validation.ConstraintViolationException;
 @Stateless
 public class SystemUserFacade extends AbstractFacade<SystemUser> {
 
-    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
+    @PersistenceContext(unitName = "aehsPU")
     private EntityManager em;
 
     @Override
@@ -34,8 +33,8 @@ public class SystemUserFacade extends AbstractFacade<SystemUser> {
     public SystemUserFacade() {
         super(SystemUser.class);
     }
-
-    public String systemUserCreate(SystemUser systemUser) {
+    
+     public String systemUserCreate(SystemUser systemUser) {
         try {
             systemUser.setDeleted("NO");
             systemUser.setUpdated("NO");
@@ -129,10 +128,10 @@ public class SystemUserFacade extends AbstractFacade<SystemUser> {
 
         try {
             if (includeLogicallyDeleted == true) {
-                qryString = "SELECT e FROM SystemUser e WHERE e.userRole.id != '3'";
+                qryString = "SELECT e FROM SystemUser e WHERE NOT (e.userRole.id = '3')";
                 listOfSystemUser = (List<SystemUser>) getEntityManager().createQuery(qryString).getResultList();
             } else if (includeLogicallyDeleted == false) {
-                qryString = "SELECT e FROM SystemUser e WHERE e.deleted = 'NO' AND e.userRole.id != '3'";
+                qryString = "SELECT e FROM SystemUser e WHERE e.deleted = 'NO' AND NOT (e.userRole.id = '3')";
                 listOfSystemUser = (List<SystemUser>) getEntityManager().createQuery(qryString).getResultList();
             }
 
@@ -161,7 +160,7 @@ public class SystemUserFacade extends AbstractFacade<SystemUser> {
                 listOfSystemUser = (List<SystemUser>) getEntityManager().createQuery(qryString).setParameter("systemUserAttribute", attributeValue).getResultList();
             } else if (fieldType.equalsIgnoreCase("STRING")) {
                 qryString = "SELECT e FROM SystemUser e ";
-                qryString += "WHERE e." + systemUserAttribute + " LIKE '%" + attributeValue + "%' AND e.userRole.id = '3'";
+                qryString += "WHERE e." + systemUserAttribute + " LIKE '%" + attributeValue + "%' AND NOT (e.userRole.id = '3')";
                 listOfSystemUser = (List<SystemUser>) getEntityManager().createQuery(qryString).getResultList();
             } else if (fieldType.equalsIgnoreCase("DATE")) {
                 listOfSystemUser = (List<SystemUser>) getEntityManager().createQuery(qryString).setParameter("systemUserAttribute", (Date) attributeValue, TemporalType.DATE).getResultList();
@@ -194,5 +193,5 @@ public class SystemUserFacade extends AbstractFacade<SystemUser> {
         }
         return new ArrayList<>();
     }
-
+    
 }
