@@ -197,7 +197,7 @@ public class mLPrediction implements Serializable {
         mlPrediction.setInputParam4(predDate.getId());
 
         mlPrediction.setDiseases(diseases.getDiseaseId());
-        mlPrediction.setDiseaseName(diseases.getDescription());
+        mlPrediction.setDiseaseName(diseases.getName());
 
         if (farmDetailSelected == null) {
             JSFUtility.warnMessage("Note: ", "Associated Farm Details need to be selected before save could proceed");
@@ -326,7 +326,7 @@ public class mLPrediction implements Serializable {
     }
 
     public List<MlPrediction> getMLPredictionList() {
-        MLPredictionList = predictionFacade.mlPredictionsFindAll();
+        MLPredictionList = predictionFacade.findAll();
         return MLPredictionList;
     }
 

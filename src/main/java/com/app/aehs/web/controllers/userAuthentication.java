@@ -78,13 +78,13 @@ public class userAuthentication implements Serializable {
                             userSession = (LoginUser) JSFUtility.getSessionValue(AeHSConstants.ADMIN_USER);
 
                             switch (systemUser.getUserRole().getRoleName()) {
-                                case "System Administrator":
+                                case "Regional Extension Officer":
 
 //                                    sysadUserSession = (LoginUser) JSFUtility.getSessionValue(AeHSConstants.ADMIN_USER);
                                     if (userSession != null) {
                                         JSFUtility.destroySession();
 
-                                        loginUser.setAccessFor("System Administrator");
+                                        loginUser.setAccessFor("Regional Extension Officer");
                                         loginUser.setUserLogin(systemUser);
                                         loginUser.setUserScreenName(username);
                                         loginUser.setIsLogin(true);
@@ -97,7 +97,7 @@ public class userAuthentication implements Serializable {
                                         return "pages/system_admin/system_admin.xhtml?faces-redirect=true";
                                     } else {
 
-                                        loginUser.setAccessFor("System Administrator");
+                                        loginUser.setAccessFor("Regional Extension Officer");
                                         loginUser.setUserLogin(systemUser);
                                         loginUser.setUserScreenName(username);
                                         loginUser.setIsLogin(true);
@@ -109,13 +109,13 @@ public class userAuthentication implements Serializable {
 
                                         return "pages/system_admin/system_admin.xhtml?faces-redirect=true";
                                     }
-                                case "Extension Officer":
+                                case "District Extension Officer":
 
 //                                    extUserSession = (LoginUser) JSFUtility.getSessionValue(AeHSConstants.ADMIN_USER);
                                     if (userSession != null) {
                                         JSFUtility.destroySession();
 
-                                        loginUser.setAccessFor("Extension Officer");
+                                        loginUser.setAccessFor("District Extension Officer");
                                         loginUser.setUserLogin(systemUser);
                                         loginUser.setUserScreenName(username);
                                         loginUser.setIsLogin(true);
@@ -128,7 +128,7 @@ public class userAuthentication implements Serializable {
                                         return "pages/extension_officer/extension_officer.xhtml?faces-redirect=true";
                                     } else {
 
-                                        loginUser.setAccessFor("Extension Officer");
+                                        loginUser.setAccessFor("District Extension Officer");
                                         loginUser.setUserLogin(systemUser);
                                         loginUser.setUserScreenName(username);
                                         loginUser.setIsLogin(true);
@@ -188,7 +188,7 @@ public class userAuthentication implements Serializable {
 
         try {
             if (userAccessController.getLoginUser() != null) {
-                if ("Extension Officer".equals(userAccessController.getLoginUser().getAccessFor())) {
+                if ("District Extension Officer".equals(userAccessController.getLoginUser().getAccessFor())) {
                     System.out.println("User has access to page: " + userAccessController.getLoginUser().getAccessFor());
                 } else {
                     System.out.println("Null Value for user and not System Admin...");

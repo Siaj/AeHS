@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Stateless
 public class FarmDetailFacade extends AbstractFacade<FarmDetail> {
 
-    @PersistenceContext(unitName = "aehsPU")
+    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
     private EntityManager em;
 
     @Override
@@ -33,7 +33,7 @@ public class FarmDetailFacade extends AbstractFacade<FarmDetail> {
         super(FarmDetail.class);
     }
     
-    public String createFarmDetails(FarmDetail farmDetail) {
+     public String createFarmDetails(FarmDetail farmDetail) {
         try {
             farmDetail.setUpdated("NO");
             farmDetail.setDeleted("NO");
@@ -118,5 +118,4 @@ public class FarmDetailFacade extends AbstractFacade<FarmDetail> {
         }
         return new ArrayList<>();
     }
-    
 }

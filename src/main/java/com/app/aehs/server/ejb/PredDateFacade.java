@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class PredDateFacade extends AbstractFacade<PredDate> {
 
-    @PersistenceContext(unitName = "aehsPU")
+    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
     private EntityManager em;
 
     @Override

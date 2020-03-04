@@ -17,7 +17,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class DiseasesFacade extends AbstractFacade<Diseases> {
 
-    @PersistenceContext(unitName = "aehsPU")
+    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
     private EntityManager em;
 
     @Override

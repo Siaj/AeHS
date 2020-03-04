@@ -21,7 +21,7 @@ import javax.persistence.TemporalType;
 @Stateless
 public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
 
-    @PersistenceContext(unitName = "aehsPU")
+    @PersistenceContext(unitName = "com.app.webservices_AeHS_war_1.0PU")
     private EntityManager em;
 
     @Override
@@ -39,7 +39,6 @@ public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
             mlPrediction.setUpdated("NO");
             super.create(mlPrediction);
             return mlPrediction.getId();
-
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -54,21 +53,6 @@ public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
             e.printStackTrace();
             return false;
         }
-    }
-
-    public List<MlPrediction> mlPredictionsFindAll() {
-        List<MlPrediction> listOfMlPredictions = null;
-        String qryString;
-
-        qryString = "SELECT e FROM MlPrediction e ";
-
-        try {
-            listOfMlPredictions = (List<MlPrediction>) getEntityManager().createQuery(qryString).getResultList();
-            return listOfMlPredictions;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
     }
 
     public List<MlPrediction> mlPredictionFindByAttribute(String mlPredictionAttribute, Object attributeValue, String fieldType, boolean includeLogicallyDeleted) {
@@ -101,5 +85,4 @@ public class MlPredictionFacade extends AbstractFacade<MlPrediction> {
         }
         return new ArrayList<>();
     }
-
 }
