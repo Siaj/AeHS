@@ -8,7 +8,6 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>TODO supply a title</title>
@@ -25,17 +24,25 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Date</label>
-                                <h:selectOneMenu styleClass="form-control" id="mlPredDate" value="#{mLPrediction.date}">
+                                <h:selectOneMenu styleClass="form-control" id="mlPredDate" 
+                                                 value="#{mLPrediction.date}"
+                                                 required="#{!empty param['makePrediction']}" 
+                                                 requiredMessage="*required">
                                     <f:selectItems value="#{commonOptions.predictParam1Options}"/>
                                 </h:selectOneMenu>
+                                <h:message for="mlPredDate" class="errorMessage"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Plant Stand</label>
-                                <h:selectOneMenu styleClass="form-control" id="mlPredPlantStand"  value="#{mLPrediction.plantStand}">
+                                <h:selectOneMenu styleClass="form-control" id="mlPredPlantStand"  
+                                                 value="#{mLPrediction.plantStand}"
+                                                 required="#{!empty param['makePrediction']}" 
+                                                 requiredMessage="*required">
                                     <f:selectItems value="#{commonOptions.predictParam2Options}"/>
                                 </h:selectOneMenu>
+                                <h:message for="mlPredPlantStand" class="errorMessage"/>
                             </div>
                         </div>
                     </div>
@@ -43,23 +50,34 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Precipitation</label>
-                                <h:selectOneMenu styleClass="form-control" id="mlPrecip"  value="#{mLPrediction.precip}">
+                                <h:selectOneMenu styleClass="form-control" id="mlPrecip"  
+                                                 value="#{mLPrediction.precip}"
+                                                 required="#{!empty param['makePrediction']}" 
+                                                 requiredMessage="*required">
                                     <f:selectItems value="#{commonOptions.predictParam3Options}"/>
                                 </h:selectOneMenu>
+                                <h:message for="mlPrecip" class="errorMessage"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Temperature</label>
-                                <h:selectOneMenu styleClass="form-control" id="mlTemp"  value="#{mLPrediction.temp}">
+                                <h:selectOneMenu styleClass="form-control" id="mlTemp"  
+                                                 value="#{mLPrediction.temp}"
+                                                 required="#{!empty param['makePrediction']}" 
+                                                 requiredMessage="*required">
                                     <f:selectItems value="#{commonOptions.predictParam4Options}"/>
                                 </h:selectOneMenu>
+                                <h:message for="mlTemp" class="errorMessage"/>
                             </div>
                         </div>
                     </div>
                     <center>
                         <div class="form-group mt-4 mb-0">
-                            <h:commandButton styleClass="btn btn-primary" action="#{mLPrediction.predictPost}" id="predict" style="width: 70%" value="Get Prediction"/>
+                            <h:commandButton styleClass="btn btn-primary" action="#{mLPrediction.predictPost}" 
+                                             id="predict" style="width: 70%" value="Get Prediction">
+                                <f:param name="makePrediction" value="true"/>
+                            </h:commandButton>
                         </div>
                     </center>
                     <br/><br/>
@@ -89,13 +107,13 @@ and open the template in the editor.
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Description</label>
-                                <h:inputTextarea styleClass="form-control" rows="3" id="predDisDesc" readonly="true" value="#{mLPrediction.diseases.description}"/>
+                                <h:inputTextarea styleClass="form-control" rows="5" id="predDisDesc" readonly="true" value="#{mLPrediction.diseases.description}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="small mb-1" for="inputFirstName">Prescription</label>
-                                <h:inputTextarea styleClass="form-control" id="predDisPres" rows="3" readonly="true" value="#{mLPrediction.diseases.prescription}"/>
+                                <h:inputTextarea styleClass="form-control" id="predDisPres" rows="5" readonly="true" value="#{mLPrediction.diseases.prescription}"/>
                             </div>
                         </div>
                     </div>

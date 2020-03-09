@@ -16,12 +16,13 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition>
-            <h:form prependId="false">
+            <h:form id="mlPredDataForm">
+                <p:growl id="message" widgetVar="MLPREDICTIONS" showDetail="true" autoUpdate="true" life="1" />
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Manage Predictions</li>
                 </ol>
 
-                <h:panelGroup layout="block" class="row">
+                <h:panelGroup layout="block" class="row" rendered="#{!mLPrediction.renderManagePrediction}">
                     <h:panelGroup layout="block" class="col-md-12">
                         <!--resizableColumns="true" style="margin-bottom:20px"-->
                         <p:dataTable var="manage_prediction" paginator="true" id="manage_pred"
@@ -61,7 +62,7 @@ and open the template in the editor.
                         </p:dataTable> 
                     </h:panelGroup>
                 </h:panelGroup>
-                <br/><br/><hr/>
+                <!--<br/><hr/>-->
 
                 <h:panelGroup layout="block" rendered="#{mLPrediction.renderManagePrediction}">
 
@@ -142,6 +143,19 @@ and open the template in the editor.
                 </h:panelGroup>
 
             </h:form>
+
+            <p:socket onMessage="handleMessage" channel="/adminMlPrediction">
+                <p:ajax event="message" update=":mlPredDataForm:manage_pred"/>
+            </p:socket>
+
+            <script type="text/javascript">
+                function handleMessage(facesmessage) {
+                    facesmessage.severity = 'info';
+                    console.log(facesmessage);
+
+                    PF('MLPREDICTIONS').show([facesmessage]);
+                }
+            </script>
         </ui:composition>
     </body>
 </html>

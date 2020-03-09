@@ -55,11 +55,13 @@ public class systemUserController implements Serializable {
     private String searchCriteria, searchText;
     private boolean renderSave = true;
     private boolean disableGroup = false;
+//    private boolean renderEmailValid = true;
 
     public systemUserController() {
     }
 
     public void saveUser() {
+//        renderEmailValid = true;
         lastname = systemUser.getLastname();
         firstname = systemUser.getFirstname();
         System.out.println(lastname + " " + firstname);
@@ -67,16 +69,16 @@ public class systemUserController implements Serializable {
         password = GenerateIDs.generateUsername(lastname, firstname);
         hashedPassword = GenerateIDs.generateHash(password);
         String userId = GenerateIDs.generateID();
-        System.out.println("Pass: " + password);
-        System.out.println("HashedPass: " + hashedPassword);
-        System.out.println("GenId: " + userId);
+//        System.out.println("Pass: " + password);
+//        System.out.println("HashedPass: " + hashedPassword);
+//        System.out.println("GenId: " + userId);
 
         systemUser.setId(userId);
         systemUser.setPassword(hashedPassword);
         systemUser.setAccountStatus("Active");
 
         userRole = userRoleFacade.find(selectedRole);
-        System.out.println("Role: " + userRole.getId() + userRole.getRoleName());
+//        System.out.println("Role: " + userRole.getId() + userRole.getRoleName());
         if (userRole == null) {
             JSFUtility.warnMessage("Required: ", "User role needs to be selected for save to be successful");
         } else {
@@ -102,14 +104,14 @@ public class systemUserController implements Serializable {
     public void saveFarmer() {
         lastname = systemUser.getLastname();
         firstname = systemUser.getFirstname();
-        System.out.println(lastname + " " + firstname);
+//        System.out.println(lastname + " " + firstname);
 
         password = GenerateIDs.generateUsername(lastname, firstname);
         hashedPassword = GenerateIDs.generateHash(password);
         String userId = GenerateIDs.generateID();
-        System.out.println("Pass: " + password);
-        System.out.println("HashedPass: " + hashedPassword);
-        System.out.println("GenId: " + userId);
+//        System.out.println("Pass: " + password);
+//        System.out.println("HashedPass: " + hashedPassword);
+//        System.out.println("GenId: " + userId);
 
         systemUser.setId(userId);
         systemUser.setUsername(password);
@@ -117,7 +119,7 @@ public class systemUserController implements Serializable {
         systemUser.setAccountStatus("Active");
 
         userRole = userRoleFacade.find("3");
-        System.out.println("Role: " + userRole.getId() + userRole.getRoleName());
+//        System.out.println("Role: " + userRole.getId() + userRole.getRoleName());
         if (userRole == null) {
             JSFUtility.warnMessage("Required: ", "Setting of user role failed. Contact system admin");
         } else {
@@ -140,7 +142,7 @@ public class systemUserController implements Serializable {
 //            userRole = userRoleFacade.find("3");
 //            systemUser.setUserRole(userRole);
 
-            // Put constraints on the page to ensure user enters all the required data
+            // Put constraints on the page to ensure user enters all the required data => Done in JSF page
             boolean updateFarmer = systemUserFacade.systemUserUpdate(getSystemUser());
 
             if (updateFarmer) {
@@ -156,6 +158,7 @@ public class systemUserController implements Serializable {
     }
 
     public void updateSysUser() {
+//        renderEmailValid = true;
         try {
             userRole = userRoleFacade.find(selectedRole);
 
@@ -186,11 +189,13 @@ public class systemUserController implements Serializable {
     }
 
     public void resetButton() {
+//        renderEmailValid = false;
         systemUser = new SystemUser();
         selectedRole = "";
         disableGroup = false;
         renderSave = true;
         renderAfterSave = false;
+//        renderEmailValid = true;
     }
 
     public void searchSystemUser() {
@@ -234,6 +239,20 @@ public class systemUserController implements Serializable {
         renderSave = false;
     }
 
+//    public static boolean isEmailValid(String email) {
+//        boolean isValid = false;
+//
+////      Initialize regex for email.
+//        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+//        CharSequence inputStr = email;
+////      Make the comparison case-insensitive.
+//        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+//        Matcher matcher = pattern.matcher(inputStr);
+//        if (matcher.matches()) {
+//            isValid = true;
+//        }
+//        return isValid;
+//    }
     //<editor-fold defaultstate="collapsed" desc="Encapsulation: Getter and setter methods">
     public List<SystemUser> getListOfFarmers() {
         if (searchCriteria == null || searchText.equals("") || searchCriteria.equals("null")) {
@@ -280,6 +299,13 @@ public class systemUserController implements Serializable {
         this.systemUserDataTable = systemUserDataTable;
     }
 
+//    public boolean isRenderEmailValid() {
+//        return renderEmailValid;
+//    }
+//
+//    public void setRenderEmailValid(boolean renderEmailValid) {
+//        this.renderEmailValid = renderEmailValid;
+//    }
     public String getSearchCriteria() {
         return searchCriteria;
     }

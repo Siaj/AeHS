@@ -21,6 +21,8 @@ import com.app.aehs.server.entities.PredDate;
 import com.app.aehs.server.entities.Temperature;
 import com.app.aehs.web.commons.GenerateIDs;
 import com.app.aehs.web.commons.JSFUtility;
+import com.app.aehs.web.controllers.quantifiers.Create;
+import com.app.aehs.web.controllers.quantifiers.Delete;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,6 +35,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.enterprise.event.Event;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
@@ -45,6 +48,14 @@ import org.primefaces.json.JSONObject;
 @Named(value = "mLPrediction")
 @SessionScoped
 public class mLPrediction implements Serializable {
+
+    @Inject
+    @Create
+    Event<MlPrediction> mlPredictionDataSave;
+
+    @Inject
+    @Delete
+    Event<MlPrediction> mlPredictionDataDelete;
 
     @Inject
     private MlPredictionFacade predictionFacade;
@@ -215,6 +226,7 @@ public class mLPrediction implements Serializable {
 
         String createdPred = predictionFacade.createPrediction(mlPrediction);
         if (createdPred != null) {
+            mlPredictionDataSave.fire(mlPrediction);
             JSFUtility.infoMessage("Success: ", "Prediction details have been saved successfully");
             resetPrediction();
         } else {
@@ -270,6 +282,7 @@ public class mLPrediction implements Serializable {
 
         if (deleted) {
             // delete success
+            mlPredictionDataDelete.fire(mlPrediction);
             JSFUtility.infoMessage("Success: ", "Prediction data was successfully deleted.");
             resetPrediction();
         } else {

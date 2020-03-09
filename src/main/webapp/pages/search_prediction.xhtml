@@ -17,79 +17,80 @@ and open the template in the editor.
     </head>
     <body>
         <ui:composition>
-            <h:form prependId="false">
+            <h:form prependId="false" id="searchPredictionForm">
+                <p:growl id="message" widgetVar="MLPREDSEARCH" showDetail="true" autoUpdate="true" life="1" />
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Search Prediction</li>
                 </ol>
+                <h:panelGroup layout="block" rendered="#{!generalSearch.renderSearchedView}">
+                    <h:panelGroup layout="block" styleClass="row">
+                        <h:panelGroup layout="block" styleClass="col-md-4">
+                            <h:outputLabel value="Search By: "/>
+                            <h:selectOneMenu styleClass="form-control" id="selectPred"
+                                             requiredMessage="Select One Criteria"
+                                             value="#{generalSearch.searchCriteria}">
+                                <f:selectItem itemValue="" itemLabel="---Select One---"/>
+                                <f:selectItem itemValue="diseaseName" itemLabel="Disease"/>
+                                <f:selectItem itemValue="farmDetail.name" itemLabel="Farm Name"/>
+                            </h:selectOneMenu>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-4">
+                            <h:outputLabel value="Search Text: "/>
+                            <h:inputText id="searchPredText" styleClass="form-control" pt:placeholder="Search Text"
+                                         value="#{generalSearch.searchText}"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" styleClass="col-md-4">
+                            <h:commandButton value="Search" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0" 
+                                             action="#{generalSearch.searchPredictions}"/>
+                            <h:commandButton value="Reset" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0"
+                                             action="#{generalSearch.resetSearch}"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <br/>
 
-                <h:panelGroup layout="block" styleClass="row">
-                    <h:panelGroup layout="block" styleClass="col-md-4">
-                        <h:outputLabel value="Search By: "/>
-                        <h:selectOneMenu styleClass="form-control" id="selectPred"
-                                         requiredMessage="Select One Criteria"
-                                         value="#{generalSearch.searchCriteria}">
-                            <f:selectItem itemValue="" itemLabel="---Select One---"/>
-                            <f:selectItem itemValue="diseaseName" itemLabel="Disease"/>
-                            <f:selectItem itemValue="farmDetail.name" itemLabel="Farm Name"/>
-                        </h:selectOneMenu>
-                    </h:panelGroup>
-                    <h:panelGroup layout="block" styleClass="col-md-4">
-                        <h:outputLabel value="Search Text: "/>
-                        <h:inputText id="searchPredText" styleClass="form-control" pt:placeholder="Search Text"
-                                     value="#{generalSearch.searchText}"/>
-                    </h:panelGroup>
-                    <h:panelGroup layout="block" styleClass="col-md-4">
-                        <h:commandButton value="Search" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0" 
-                                         action="#{generalSearch.searchPredictions}"/>
-                        <h:commandButton value="Reset" styleClass="btn btn-primary btn-fill" style="margin: 30px 3px 0 0"
-                                         action="#{generalSearch.resetSearch}"/>
+                    <h:panelGroup layout="block" class="row">
+                        <h:panelGroup layout="block" class="col-md-12">
+                            <!--resizableColumns="true" style="margin-bottom:20px"-->
+                            <p:dataTable var="search_predict" paginator="true" id="search_prediction"
+                                         paginatorPosition="bottom" rows="5" value="#{generalSearch.mlPredictionsDataTable}"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
+                                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                                         rowsPerPageTemplate="5,10,15" reflow="true">
+                                <f:facet name="header">
+                                    <h:outputText value="List of Predictions"/>
+                                </f:facet>
+                                <p:column headerText="Date" priority="2">
+                                    <h:outputText value="#{search_predict.date}">
+                                        <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" type="date" timeStyle="short"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Precip" priority="3">
+                                    <h:outputText value="#{search_predict.inputParam1}"/>
+                                </p:column>
+                                <p:column headerText="Temp" priority="4">
+                                    <h:outputText value="#{search_predict.inputParam2}"/>
+                                </p:column>
+                                <p:column headerText="Plant Stand" priority="5">
+                                    <h:outputText value="#{search_predict.inputParam3}"/>
+                                </p:column>
+                                <p:column headerText="Date" priority="6">
+                                    <h:outputText value="#{search_predict.inputParam4}"/>
+                                </p:column>
+                                <p:column headerText="Prediction">
+                                    <h:outputText value="#{search_predict.diseaseName}"/>
+                                </p:column>
+                                <p:column headerText="Farm">
+                                    <h:outputText value="#{search_predict.farmDetail.name}"/>
+                                </p:column>
+                                <p:column headerText="Options">
+                                    <h:commandLink value="Select" style="text-decoration: underline;color: green"
+                                                   action="#{generalSearch.rowSelectPrediction}"/>
+                                </p:column>
+                            </p:dataTable> 
+                        </h:panelGroup>
                     </h:panelGroup>
                 </h:panelGroup>
-                <br/>
-
-                <h:panelGroup layout="block" class="row">
-                    <h:panelGroup layout="block" class="col-md-12">
-                        <!--resizableColumns="true" style="margin-bottom:20px"-->
-                        <p:dataTable var="search_predict" paginator="true" id="search_prediction"
-                                     paginatorPosition="bottom" rows="5" value="#{generalSearch.mlPredictionsDataTable}"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                     
-                                     currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-                                     rowsPerPageTemplate="5,10,15" reflow="true">
-                            <f:facet name="header">
-                                <h:outputText value="List of Predictions"/>
-                            </f:facet>
-                            <p:column headerText="Date" priority="2">
-                                <h:outputText value="#{search_predict.date}">
-                                    <f:convertDateTime dateStyle="short" pattern="dd/MM/yyyy" type="date" timeStyle="short"/>
-                                </h:outputText>
-                            </p:column>
-                            <p:column headerText="Precip" priority="3">
-                                <h:outputText value="#{search_predict.inputParam1}"/>
-                            </p:column>
-                            <p:column headerText="Temp" priority="4">
-                                <h:outputText value="#{search_predict.inputParam2}"/>
-                            </p:column>
-                            <p:column headerText="Plant Stand" priority="5">
-                                <h:outputText value="#{search_predict.inputParam3}"/>
-                            </p:column>
-                            <p:column headerText="Date" priority="6">
-                                <h:outputText value="#{search_predict.inputParam4}"/>
-                            </p:column>
-                            <p:column headerText="Prediction">
-                                <h:outputText value="#{search_predict.diseaseName}"/>
-                            </p:column>
-                            <p:column headerText="Farm">
-                                <h:outputText value="#{search_predict.farmDetail.name}"/>
-                            </p:column>
-                            <p:column headerText="Options">
-                                <h:commandLink value="Select" style="text-decoration: underline;color: green"
-                                               action="#{generalSearch.rowSelectPrediction}"/>
-                            </p:column>
-                        </p:dataTable> 
-                    </h:panelGroup>
-                </h:panelGroup>
-
-                <br/><br/><hr/>
+                <!--<br/><hr/>-->
 
                 <h:panelGroup layout="block" rendered="#{generalSearch.renderSearchedView}">
 
@@ -167,6 +168,19 @@ and open the template in the editor.
                 </h:panelGroup>
 
             </h:form>
+
+            <p:socket onMessage="handleMessage" channel="/mlDataGeneralSearh">
+                <p:ajax event="message" update=":searchPredictionForm:search_prediction"/>
+            </p:socket>
+
+            <script type="text/javascript">
+                function handleMessage(facesmessage) {
+                    facesmessage.severity = 'info';
+                    console.log(facesmessage);
+
+                    PF('MLPREDSEARCH').show([facesmessage]);
+                }
+            </script>
         </ui:composition>
     </body>
 </html>

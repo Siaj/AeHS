@@ -118,7 +118,7 @@ public class CommonOptions implements Serializable {
     public SelectItem[] getSystemUsersOptions() {
 //        Shall change query to fetch only user who have role defined as FARMER = DONE
         systemUsersOptions = new SelectItem[systemUserFacade.systemUserGetAllFarmers(true).size() + 1];
-        System.out.println("My Size: " + systemUserFacade.systemUserGetAllFarmers(true));
+//        System.out.println("My Size: " + systemUserFacade.systemUserGetAllFarmers(true));
         systemUsersOptions[0] = new SelectItem("", "---Select Owner---");
         int c = 1;
 

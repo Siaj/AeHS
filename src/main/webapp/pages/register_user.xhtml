@@ -21,13 +21,13 @@ and open the template in the editor.
                 <li class="breadcrumb-item active">Register User</li>
             </ol>
             <h:panelGroup layout="block" rendered="#{!systemUserController.renderAfterSave}">
-                <h:form prependId="false">
+                <h:form >
                     <div class="form-row">
                         <div class="col-md-6">
                             <h:panelGroup layout="block" class="form-group">
                                 <label class="small mb-1" for="inputFirstName">First Name</label>
                                 <h:inputText id="sysFName" styleClass="form-control" 
-                                             pt:placeholder="Enter something pls" 
+                                             pt:placeholder="Enter Firstname" 
                                              value="#{systemUserController.systemUser.firstname}"
                                              required="#{!empty param['saveUser']}" 
                                              requiredMessage="*required"/>
@@ -38,7 +38,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Last Name</label>
                                 <h:inputText id="sysLName" styleClass="form-control" 
-                                             pt:placeholder="Enter something pls" 
+                                             pt:placeholder="Enter Lastname" 
                                              value="#{systemUserController.systemUser.lastname}"
                                              required="#{!empty param['saveUser']}" 
                                              requiredMessage="*required"/>
@@ -64,10 +64,10 @@ and open the template in the editor.
                             <div class="form-group">
                                 <label class="small mb-1" for="inputLastName">Phone Number</label>
                                 <h:inputText autocomplete="off" id="sysPhoneNum" styleClass="form-control" 
-                                             pt:placeholder="Enter something pls" 
+                                             pt:placeholder="Enter Phonenumber" 
                                              value="#{systemUserController.systemUser.phoneNumber}"
                                              required="#{!empty param['saveUser']}" 
-                                             requiredMessage="*required"/>
+                                             requiredMessage="*required" pt:type="number"/>
                                 <h:message for="sysPhoneNum" class="errorMessage"/>
                             </div>
                         </div>
@@ -82,19 +82,22 @@ and open the template in the editor.
                                                  value="#{systemUserController.selectedRole}"
                                                  required="#{!empty param['saveUser']}" 
                                                  requiredMessage="*required">
-                                <f:selectItems value="#{commonOptions.userRoleOptions}"/>
+                                    <f:selectItems value="#{commonOptions.userRoleOptions}"/>
                                 </h:selectOneMenu>
                                 <h:message for="sysUserRole" class="errorMessage"/>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="inputLastName">Email</label>
+                                <label class="small mb-1" for="inputLastName">Username</label>
                                 <h:inputText autocomplete="off" id="sysEmail" styleClass="form-control"
-                                             pt:placeholder="Enter something pls" 
+                                             pt:placeholder="Enter Username" 
                                              value="#{systemUserController.systemUser.username}"
-                                             required="#{!empty param['saveUser']}" 
+                                             required="#{!empty param['saveUser']}"
+                                             validatorMessage="Inavalid email format" 
                                              requiredMessage="*required"/>
+                                    <!--                                    <f:validateRegex
+                                                                            pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />-->
                                 <h:message for="sysEmail" class="errorMessage"/>
                             </div>
                         </div>
@@ -106,16 +109,18 @@ and open the template in the editor.
                                              rendered="#{systemUserController.renderSave}">
                                 <f:param name="saveUser" value="true"/>
                             </h:commandButton>
-                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
-                                             value="Reset Registeration" action="#{systemUserController.resetButton}"
+                            <h:commandButton value="Reset Registration"
+                                             action="#{systemUserController.resetButton}"
+                                             styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                              rendered="#{systemUserController.renderSave}"/>
                             <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                              value="Update Account" action="#{systemUserController.updateSysUser}"
                                              rendered="#{!systemUserController.renderSave}">
                                 <f:param name="saveUser" value="true"/>
                             </h:commandButton>
-                            <h:commandButton styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
-                                             value="Cancel Update" action="#{systemUserController.resetButton}"
+                            <h:commandButton value="Cancel Update"
+                                             action="#{systemUserController.resetButton}"
+                                             styleClass="btn btn-primary" style="width: 70%; margin: 7px" 
                                              rendered="#{!systemUserController.renderSave}"/>
                         </div>
                     </center>

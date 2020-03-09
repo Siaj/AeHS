@@ -58,7 +58,7 @@ public class userAuthentication implements Serializable {
                 return "index.xhtml";
             } else {
                 password = GenerateIDs.generateHash(password);
-                System.out.println("Hashed Password: " + password);
+//                System.out.println("Hashed Password: " + password);
 
                 systemUser = supportBean.authenticateUser(username, password);
 
@@ -69,7 +69,7 @@ public class userAuthentication implements Serializable {
                         JSFUtility.errorMessage("Account Status: ", "Your account is currently disabled, contact systems administrator");
                         return "index.xhtml";
                     } else {
-                        System.out.println("Role: " + systemUser.getUserRole().getRoleName());
+//                        System.out.println("Role: " + systemUser.getUserRole().getRoleName());
 
                         if (null == systemUser.getUserRole().getRoleName()) {
                             JSFUtility.errorMessage("Role: ", "Your role is not defined, contact systems administrator");
@@ -148,13 +148,13 @@ public class userAuthentication implements Serializable {
                     }
                 } else {
                     JSFUtility.warnMessage("Login :", "Username or Password Incorrect");
-                    System.out.println("Wrong username or password");
+//                    System.out.println("Wrong username or password");
                     return "index.xhtml";
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error in authenticating user: " + e.getLocalizedMessage());
+//            System.out.println("Error in authenticating user: " + e.getLocalizedMessage());
             return null;
         }
     }
@@ -164,7 +164,7 @@ public class userAuthentication implements Serializable {
                 = (ConfigurableNavigationHandler) JSFUtility.getCurrentContext().getApplication().getNavigationHandler();
 
         if (userAccessController.isIsLogin() == false) {
-            System.out.println("Login Status: " + userAccessController.isIsLogin());
+//            System.out.println("Login Status: " + userAccessController.isIsLogin());
             nav.performNavigation("/index.xhtml?faces-redirect=true");
             JSFUtility.warnMessage("Authorization Error", "You need to login with correct credential to access this section");
         } else {
@@ -191,7 +191,7 @@ public class userAuthentication implements Serializable {
                 if ("District Extension Officer".equals(userAccessController.getLoginUser().getAccessFor())) {
                     System.out.println("User has access to page: " + userAccessController.getLoginUser().getAccessFor());
                 } else {
-                    System.out.println("Null Value for user and not System Admin...");
+//                    System.out.println("Null Value for user and not System Admin...");
                     nav.performNavigation("/index.xhtml?faces-redirect=true");
                 }
             } else {
